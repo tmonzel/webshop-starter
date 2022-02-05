@@ -2,7 +2,7 @@
  * Abstract mongo document type
  */
 export interface AbstractDocument {
-    _id?: string;
+    _id: string;
 }
 
 /**
