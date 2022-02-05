@@ -1,5 +1,5 @@
 import { map, Observable } from 'rxjs';
-import { api } from './api-services';
+import { api } from './api';
 
 export abstract class ResourceService<Resource> {
     constructor(
