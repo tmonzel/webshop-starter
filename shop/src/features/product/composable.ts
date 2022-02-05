@@ -1,6 +1,6 @@
 import { reactive } from 'vue';
-import { Product } from './core';
-import { productService } from './data';
+import { Product } from '@/core';
+import { productService } from '@/data';
 
 interface ProductState {
     items: Product[];
