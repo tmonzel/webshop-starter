@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg bg-light shadow-lg">
     <div class="container">
-      <RouterLink class="navbar-brand" to="/">Shop</RouterLink>
+      <RouterLink class="navbar-brand" to="/">
+        <i class="bi-shop" style="font-size: 2rem"></i>
+      </RouterLink>
       
       <button 
         class="navbar-toggler" 
@@ -18,7 +20,10 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/products">Products</RouterLink>
+            <RouterLink class="nav-link" to="/products">Produkte</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/cart">Warenkorb <span class="badge bg-primary">2</span></RouterLink>
           </li>
         </ul>
       </div>
