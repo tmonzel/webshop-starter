@@ -1,0 +1,41 @@
+<template>
+  <div class="row">
+    <div class="col-md-4" v-for="product in products" :key="product._id">
+        <div class="card" @click="navigateToProduct(product._id)">
+          <div class="card-body">
+            <h6 class="text-muted text-uppercase m-0">{{ product.type }}</h6>
+            <h3 class="cart-title">{{ product.name }}</h3>
+          </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+import { Product } from '@/core';
+import { router } from '@/routings';
+
+export default defineComponent({
+  name: 'ProductList',
+  props: {
+    products: {} as PropType<Product[]>,
+  },
+
+  setup() {
+    const navigateToProduct = (id: string) => {
+      router.push('/products/' + id);
+    };
+
+    return {
+      navigateToProduct
+    }
+  }
+});
+</script>
+
+<style scoped>
+.card {
+  cursor: pointer;
+}
+</style>
