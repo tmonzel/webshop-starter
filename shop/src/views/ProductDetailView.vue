@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-    {{ product?.name }}
+  <div class="container mt-5">
+    <h1>{{ product?.name }}</h1>
+    <p class="lead">{{ product?.type }}</p>
   </div>
 </template>
 
