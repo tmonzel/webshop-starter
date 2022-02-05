@@ -1,1 +1,1 @@
-export * from './composeable';
+export * from './composable';
