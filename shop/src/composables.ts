@@ -1,30 +1,29 @@
 import { reactive } from 'vue';
-import { api, Product } from './core';
+import { Product } from './core';
+import { productService } from './data';
 
 interface ProductState {
     items: Product[];
-    selectedItem: Product | null;
+    loadedItem: Product | null;
 } 
 
 const initialState: ProductState = {
     items: [],
-    selectedItem: null
+    loadedItem: null
 }
 
 export const useProducts = () => {
     const state = reactive(initialState);
 
     const loadAll = () => {
-        api.get('/products').subscribe(data => {
-            state.items = data as Product[];
+        productService.find().subscribe(products => {
+            state.items = products;
         });
     }
 
     const loadOne = (id: string) => {
-        api.get('/products/' + id).subscribe(data => {
-            console.log(data);
-            
-            state.selectedItem = data as Product;
+        productService.findOne(id).subscribe(product => {
+            state.loadedItem = product;
         });
     }
 
