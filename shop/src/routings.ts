@@ -6,6 +6,24 @@ const router = createRouter({
     linkExactActiveClass: 'active',
     routes: [
         {
+            path: '/cart',
+            name: 'Cart',
+            component: () => import('./views/CartView.vue')
+        },
+
+        {
+            path: '/signup',
+            name: 'Signup',
+            component: () => import('./views/SignupView.vue')
+        },
+
+        {
+            path: '/login',
+            name: 'Login',
+            component: () => import('./views/LoginView.vue')
+        },
+
+        {
             path: '/products',
             name: 'ProductList',
             component: () => import('./views/ProductListView.vue')
@@ -16,6 +34,12 @@ const router = createRouter({
             name: 'ProductDetail',
             component: () => import('./views/ProductDetailView.vue'),
             props: true
+        },
+
+        {
+            path: '/orders',
+            name: 'Orders',
+            component: () => import('./views/OrdersView.vue')
         },
 
         {
