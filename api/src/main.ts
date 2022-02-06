@@ -4,6 +4,7 @@ import { createResource } from './resource-creator';
 import { ProductModel } from './models/product.model';
 import mongoose from 'mongoose';
 import { createAuth } from './auth';
+import { createCart } from './cart';
 
 mongoose.connect('mongodb://root:admin@localhost:27017/admin').then(client => {
 
@@ -21,6 +22,9 @@ mongoose.connect('mongodb://root:admin@localhost:27017/admin').then(client => {
 
     // Bind auth endpoint
     createAuth(api);
+
+    // Bind cart endpoint
+    createCart(api);
 
     api.listen(3000, () => console.log('API ist listening on port 3000'));
 

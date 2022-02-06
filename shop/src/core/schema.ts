@@ -8,7 +8,7 @@ export interface AbstractDocument {
 /**
  * Benutzer 
  */
-export interface User {
+export interface User extends AbstractDocument {
     email: string;
     username: string;
     password?: string;

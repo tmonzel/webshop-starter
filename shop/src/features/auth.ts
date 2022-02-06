@@ -90,6 +90,8 @@ export const useLoginForm = () => {
                 form.data.password = '';
 
                 authState.user = jwt_decode(response.accessToken);
+                console.log(authState.user);
+                
                 localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
             },
 
