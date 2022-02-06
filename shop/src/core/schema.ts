@@ -6,6 +6,15 @@ export interface AbstractDocument {
 }
 
 /**
+ * Benutzer 
+ */
+export interface User {
+    email: string;
+    username: string;
+    password?: string;
+}
+
+/**
  * 
  * 
  * @endpoint /api/products
