@@ -1021,7 +1021,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@popperjs/core@^2.11.2":
+"@popperjs/core@^2.11.2", "@popperjs/core@^2.9.2":
   version "2.11.2"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
@@ -1048,6 +1048,14 @@
   dependencies:
     "@types/connect" "*"
     "@types/node" "*"
+
+"@types/bootstrap@^5.1.9":
+  version "5.1.9"
+  resolved "https://registry.yarnpkg.com/@types/bootstrap/-/bootstrap-5.1.9.tgz#55b9bea862667e351e9873ff94fad7cd0be10c5f"
+  integrity sha512-Tembe6lt7819EUzV5LSG9uuwULm4hdEGV9LZ8QBYpWc0J+a+9DdmJEwZ4FMaXGVJWwumTPSkJ8JQF0/KDAmXYg==
+  dependencies:
+    "@popperjs/core" "^2.9.2"
+    "@types/jquery" "*"
 
 "@types/connect-history-api-fallback@*":
   version "1.3.5"
@@ -1097,6 +1105,13 @@
   integrity sha512-5kPLG5BKpWYkw/LVOGWpiq3nEVqxiN32rTgI53Sk12/xHFQ2rG3ehI9IO+O3W2QoKeyB92dJkoka8SUm6BX1pA==
   dependencies:
     "@types/node" "*"
+
+"@types/jquery@*":
+  version "3.5.13"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.13.tgz#5482d3ee325d5862f77a91c09369ae0a5b082bf3"
+  integrity sha512-ZxJrup8nz/ZxcU0vantG+TPdboMhB24jad2uSap50zE7Q9rUeYlCF25kFMSmHR33qoeOgqcdHEp3roaookC0Sg==
+  dependencies:
+    "@types/sizzle" "*"
 
 "@types/json-schema@^7.0.4", "@types/json-schema@^7.0.5", "@types/json-schema@^7.0.7", "@types/json-schema@^7.0.8":
   version "7.0.9"
@@ -1155,6 +1170,11 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/sizzle@*":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
+  integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
 "@types/source-list-map@*":
   version "0.1.2"
