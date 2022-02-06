@@ -7,8 +7,8 @@ const get = (path: string, config?: AxiosRequestConfig) => {
     return http.get(API_URL + path, config);
 }
 
-const post = () => {
-
+const post = (path: string, data: any, config?: AxiosRequestConfig) => {
+    return http.post(API_URL + path, data, config);
 }
 
 export const api = {

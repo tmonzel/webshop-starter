@@ -19,6 +19,18 @@ const get = (path: string, config?: AxiosRequestConfig): Observable<any> => {
     });
 }
 
+const post = (path: string, data: any, config?: AxiosRequestConfig): Observable<any> => {
+    return new Observable(observer => {
+        httpService.post(path, data, config).then(response => {
+            observer.next(response.data);
+            observer.complete();
+        }).catch(error => {
+            observer.error(error);
+        });
+    });
+}
+
 export const http = {
-    get
+    get,
+    post
 }
