@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-      <h1>Our Products</h1>
+      <h1>Produktpalette</h1>
       <hr class="my-5">
       <ProductList :products="state.items" />
     </div>
