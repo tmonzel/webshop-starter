@@ -24,8 +24,8 @@ export const useCart = () => {
         syncStorage();
     }
 
-    const removeItem = (id: string) => {
-        cartState.items = cartState.items.filter(item => item._id !== id);
+    const removeItem = (index: number) => {
+        cartState.items.splice(index, 1);
         syncStorage();
     }
 
