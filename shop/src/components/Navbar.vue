@@ -17,7 +17,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
             <RouterLink class="nav-link" to="/products">Produkte</RouterLink>
@@ -29,6 +29,27 @@
             <RouterLink class="nav-link" to="/cart">Warenkorb <span class="badge bg-primary">{{ cart.items.length }}</span></RouterLink>
           </li>
         </ul>
+
+        <ul class="navbar-nav" v-if="auth.user">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ auth.user.email }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Profil</a></li>
+              <li><a class="dropdown-item" href="#" @click="logout">Abmelden</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav" v-else>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/login">Anmelden</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" to="/signup">Registrieren</RouterLink>
+          </li>
+        </ul>
       </div>
 
     </div>
@@ -36,6 +57,7 @@
 </template>
 
 <script lang="ts">
+import { useAuth } from '@/features/auth';
 import { useCart } from '@/features/cart';
 import { defineComponent } from 'vue';
 
@@ -43,10 +65,13 @@ export default defineComponent({
   name: 'Navbar',
 
   setup() {
-    const { state } = useCart();
+    const { state: cart } = useCart();
+    const { state: auth, logout } = useAuth();
 
     return {
-      cart: state
+      cart,
+      auth,
+      logout
     }
   }
 });
