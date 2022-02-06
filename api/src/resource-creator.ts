@@ -1,17 +1,16 @@
 import { Express } from 'express';
-import { Db, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import { Document, Model } from 'mongoose';
 
-export const createResource = (api: Express, db: Db, identifier: string) => {
-    const collection = db.collection(identifier);
-
-    api.get("/" + identifier, (req, res) => {
-        collection.find().toArray().then(result => {
+export const createResource = <T extends Document>(api: Express, model: Model<T>) => {
+    api.get("/" + model.collection.name, (req, res) => {
+        model.find().then(result => {
             res.json(result);
         })
     });
 
-    api.get("/" + identifier + "/:id", (req, res) => {
-        collection.findOne({ _id: new ObjectId(req.params.id) }).then(result => {
+    api.get("/" + model.collection.name + "/:id", (req, res) => {
+        model.findOne({ _id: new ObjectId(req.params.id) }).then(result => {
             res.json(result);
         });
     });

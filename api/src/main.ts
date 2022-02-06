@@ -1,18 +1,26 @@
 import express from 'express';
 import cors from 'cors';
-import { MongoClient } from 'mongodb';
 import { createResource } from './resource-creator';
+import { ProductModel } from './models/product.model';
+import mongoose from 'mongoose';
+import { createAuth } from './auth';
 
-MongoClient.connect('mongodb://root:admin@localhost:27017').then(client => {
+mongoose.connect('mongodb://root:admin@localhost:27017/admin').then(client => {
 
     // Initialize application
     const api = express();
-    const db = client.db('admin');
 
     // Allow cross origin requests for all routes
     api.use(cors());
 
-    createResource(api, db, 'products');
+    // Parse content-type application/json 
+    api.use(express.json());
+    
+    // Bind resource endpoints
+    createResource(api, ProductModel);
+
+    // Bind auth endpoint
+    createAuth(api);
 
     api.listen(3000, () => console.log('API ist listening on port 3000'));
 
