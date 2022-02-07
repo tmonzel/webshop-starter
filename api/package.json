@@ -12,7 +12,8 @@
     "mongoose": "^6.2.0"
   },
   "scripts": {
-    "start": "nodemon src/main.ts"
+    "start": "nodemon src/main.ts",
+    "fixtures:populate":"ts-node src/fixtures.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
