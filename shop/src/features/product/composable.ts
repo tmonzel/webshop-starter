@@ -1,15 +1,17 @@
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { Product } from '@/core';
 import { productService } from '@/data';
 
 interface ProductState {
     items: Product[];
     loadedItem: Product | null;
+    searchText: string;
 } 
 
 const initialState: ProductState = {
     items: [],
-    loadedItem: null
+    loadedItem: null,
+    searchText: ''
 }
 
 export const useProducts = () => {
@@ -27,9 +29,14 @@ export const useProducts = () => {
         });
     }
 
+    const filteredItems = computed(() => {
+        return state.items.filter(item => state.searchText !== '' ? item.name.toLowerCase().indexOf(state.searchText.toLowerCase()) !== -1 : true);
+    })
+
     return {
         state,
         loadAll,
-        loadOne
+        loadOne,
+        filteredItems
     }
 }

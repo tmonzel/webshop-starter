@@ -1,8 +1,19 @@
 <template>
     <div class="container mt-5">
-      <h1 class="display-3">Artikel</h1>
+      <div class="d-flex justify-content-end mb-1">
+        <input type="text" v-model="state.searchText" class="form-control form-control-lg" style="max-width: 320px;" placeholder="Suche&hellip;" />
+      </div>
+
+      <h1 v-if="state.searchText !== ''">Suche nach „{{ state.searchText }}“</h1>
+      <h1 v-else>Alle Artikel</h1>
+
       <hr class="my-5">
-      <ProductList :products="state.items" />
+
+      <ProductList v-if="filteredItems.length > 0" :products="filteredItems" />
+
+      <div class="alert alert-info" v-else>
+        Keine Artikel zu „{{ state.searchText }}“ gefunden
+      </div>
     </div>
 </template>
 
@@ -23,7 +34,8 @@ export default defineComponent({
     products.loadAll();
 
     return {
-      state: products.state
+      state: products.state,
+      filteredItems: products.filteredItems
     }
   }
 });
