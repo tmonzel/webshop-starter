@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
-    <h1>Dashboard</h1>
-    <p class="lead">Welcome to this wonderful shop</p>
+    <h1 class="display-3">Mein Laden</h1>
+    <p class="lead">Unsere beliebtesten Artikel findest du hier</p>
   </div>
 </template>
 
