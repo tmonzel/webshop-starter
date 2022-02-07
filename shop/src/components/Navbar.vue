@@ -20,7 +20,7 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/products">Produkte</RouterLink>
+            <RouterLink class="nav-link" to="/products">Artikel</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" to="/orders">Bestellungen</RouterLink>
