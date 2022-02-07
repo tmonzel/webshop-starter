@@ -23,6 +23,7 @@ export interface Product extends AbstractDocument {
     type: string;
     name: string;
     description: string;
+    imageUrl: string;
     price: { 
         value: number; 
         currency: 'EUR' | 'USD' 

@@ -1,9 +1,20 @@
 <template>
   <div class="container mt-5">
-    <h1>{{ product?.name }}</h1>
-    <p class="lead">{{ product?.type }}</p>
-    <div>
-      <button class="btn btn-primary" @click="addToCart">In den Warenkorb</button>
+    <div class="row justify-content-between">
+      <div class="col-md-5 bg-light d-flex justify-content-center align-items-center" style="min-height: 500px;">
+        <div style="width: 350px; height: 300px">
+          <img :src="product?.imageUrl" class="w-100">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h1>{{ product?.name }}</h1>
+        <p class="lead">{{ product?.type }}</p>
+        <p v-html="product?.description"></p>
+        <p class="fs-4 mark">{{ product?.price.value }} {{ product?.price.currency }}</p>
+        <div>
+          <button class="btn btn-lg btn-primary" @click="addToCart">In den Warenkorb</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>

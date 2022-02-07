@@ -5,6 +5,9 @@
           <div class="card-body">
             <h6 class="text-muted text-uppercase m-0">{{ product.type }}</h6>
             <h3 class="cart-title">{{ product.name }}</h3>
+            <div>
+              <img :src="product.imageUrl" class="w-100">
+            </div>
           </div>
         </div>
     </div>
