@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import { createAuth } from './auth';
 import { createCart } from './cart';
 
-mongoose.connect('mongodb://root:admin@localhost:27017/admin').then(client => {
+mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
 
     // Initialize application
     const api = express();
