@@ -1,8 +1,13 @@
 import { api, OrderItem } from '@/core';
-import { reactive } from 'vue'
+import { store } from '@/state';
+import { computed, reactive } from 'vue'
 import { useAuth } from '../auth';
 
 const CART_STORAGE_KEY = '_CART';
+
+export enum CartActions {
+    ADD_ITEM = 'CART_ADD_ITEM'
+}
 
 export interface CartState {
     items: OrderItem[]
@@ -25,6 +30,7 @@ export const useCart = () => {
     const addItem = (item: OrderItem) => {
         cartState.items.push(item);
         syncStorage();
+        store.dispatch({ type: CartActions.ADD_ITEM });
     }
 
     const removeItem = (index: number) => {
@@ -50,10 +56,18 @@ export const useCart = () => {
         }
     }
 
+    const priceTotal = computed(() => {
+        return {
+            currency: 'EUR',
+            value: cartState.items.reduce((sum, curr) => sum + curr.product.price.value, 0)
+        }
+    });
+
     return {
         state: cartState,
         addItem,
         removeItem,
-        orderCart
+        orderCart,
+        priceTotal
     }
 }

@@ -1,4 +1,5 @@
 import { UserActions } from './features/auth';
+import { CartActions } from './features/cart';
 import { router } from './routings';
 import { store } from './state';
 
@@ -13,6 +14,8 @@ store.actions$.subscribe(action => {
         case UserActions.LOGOUT_SUCCESS:
             router.push('/login');
             break;
-        
+        case CartActions.ADD_ITEM:
+            router.push('/cart');
+            break;
     }
 })
