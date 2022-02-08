@@ -40,12 +40,13 @@ export const useAuth = () => {
 }
 
 export const useSignupForm = () => {
-    const form = reactive({
-        errors: {} as any,
+    const form = reactive<FormState>({
+        errors: null,
         data: {
             email: '',
             username: '',
-            password: ''
+            password: '',
+            passwordConfirm: ''
         }
     });
 
