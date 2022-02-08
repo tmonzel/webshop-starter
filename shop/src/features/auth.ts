@@ -1,6 +1,6 @@
 import { User, api } from '@/core';
 import { store } from '@/state';
-import { reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import jwt_decode from "jwt-decode";
 
 export enum UserActions {
@@ -15,6 +15,11 @@ export interface AuthState {
     user: User | null;
 }
 
+export interface FormState {
+    errors: any;
+    data: any;
+}
+
 const authToken = localStorage.getItem(AUTH_TOKEN_KEY);
 
 const authState = reactive<AuthState>({
@@ -22,7 +27,6 @@ const authState = reactive<AuthState>({
 });
 
 export const useAuth = () => {
-
     const logout = () => {
         authState.user = null;
         localStorage.removeItem(AUTH_TOKEN_KEY);
@@ -52,7 +56,7 @@ export const useSignupForm = () => {
                 store.dispatch({ type: UserActions.REGISTER_SUCCESS });
 
                 // Reset form
-                form.errors = {};
+                form.errors = null;
                 form.data.email = '';
                 form.data.username = '';
                 form.data.password = '';
@@ -65,13 +69,14 @@ export const useSignupForm = () => {
     }
 
     return {
-        form, submit
+        form, 
+        submit
     }
 }
 
 export const useLoginForm = () => {
-    const form = reactive({
-        errors: {} as any,
+    const form = reactive<FormState>({
+        errors: null,
         data: {
             email: '',
             password: ''
@@ -85,23 +90,31 @@ export const useLoginForm = () => {
                 store.dispatch({ type: UserActions.LOGIN_SUCCESS });
 
                 // Reset form
-                form.errors = {};
+                form.errors = null;
                 form.data.email = '';
                 form.data.password = '';
 
                 authState.user = jwt_decode(response.accessToken);
-                console.log(authState.user);
-                
                 localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
             },
 
             error(error) {
-                form.errors = error.response.data.errors;
+                if(error.response.data.errors) {
+                    form.errors = error.response.data.errors
+                } else {
+                    form.errors = {
+                        remoteError: error.response.data
+                    };
+                }
             }
         });
     }
 
+    const hasErrors = computed(() => form.errors ? Object.keys(form.errors).length > 0 : false);
+
     return {
-        form, submit
+        form, 
+        submit,
+        hasErrors
     }
 }
