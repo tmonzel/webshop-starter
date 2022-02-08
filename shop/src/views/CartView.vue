@@ -15,7 +15,7 @@
                   <h5 class="card-title">{{ item.product.name }}</h5>
                   <p class="card-text">{{ item.product.type }}</p>
                   <p class="card-text d-flex align-items-center">
-                    <input type="number" class="form-control" v-model="item.quantity" style="max-width: 50px" min="1">
+                    <input type="number" class="form-control" v-model="item.quantity" style="max-width: 80px" min="1">
                     <span class="ms-3">{{ (item.quantity * item.product.price.value).toFixed(2) }} {{ item.product.price.currency }}</span>
                   </p>
 
@@ -39,7 +39,7 @@
         </div>
 
         <div class="d-flex justify-content-end" v-if="auth.user">
-          <button class="btn btn-lg btn-primary" @click="orderCart">Bestellen</button>
+          <button class="btn btn-lg btn-primary" @click="orderCart" :disabled="cart.items.length === 0">Bestellen</button>
         </div>
 
         <div class="alert alert-warning" v-else>
