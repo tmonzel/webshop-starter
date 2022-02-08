@@ -1,18 +1,32 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-5" v-if="item">
     <div class="row justify-content-between">
       <div class="col-md-5 bg-light d-flex justify-content-center align-items-center" style="min-height: 500px;">
         <div style="width: 350px; height: 300px">
-          <img :src="product?.imageUrl" class="w-100">
+          <img :src="item.product.imageUrl" class="w-100">
         </div>
       </div>
       <div class="col-md-6">
-        <h1>{{ product?.name }}</h1>
-        <p class="lead">{{ product?.type }}</p>
-        <p v-html="product?.description"></p>
-        <p class="fs-4 mark">{{ product?.price.value }} {{ product?.price.currency }}</p>
+        <h1>{{ item.product?.name }}</h1>
+        <p class="lead">{{ item.product.type }}</p>
+        <p v-html="item.product?.description"></p>
+        <div class="d-flex">
+          <div style="max-width: 100px;">
+            <input 
+              type="number" 
+              class="form-control form-control-lg" 
+              :class="{ 'is-invalid': item.quantity < 1 }"
+              placeholder="Anzahl" 
+              v-model="item.quantity" 
+              min="1"
+            >
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <p class="fs-4 mark">{{ (item.quantity * item.product.price.value).toFixed(2) }} {{ item.product.price.currency }}</p>
+          </div>
+        </div>
         <div>
-          <button class="btn btn-lg btn-primary" @click="addToCart">In den Warenkorb</button>
+          <button class="btn btn-lg btn-primary" @click="addItem(item)" :disabled="item.quantity < 1">In den Warenkorb</button>
         </div>
       </div>
     </div>
@@ -20,30 +34,30 @@
 </template>
 
 <script lang="ts">
-import { Product } from '@/core';
+import { OrderItem } from '@/core';
 import { productService } from '@/data';
 import { useCart } from '@/features/cart';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, Ref, ref } from 'vue';
 
 export default defineComponent({
   name: 'ProductDetailView',
   props: ['id'],
 
   setup(props) {
-    const product = ref<Product>();
+    const item = ref() as Ref<OrderItem>;
     const { addItem } = useCart();
 
-    productService.findOne(props.id).subscribe(p =>{
-      product.value = p;
+    productService.findOne(props.id).subscribe(product =>{
+      item.value = {
+        product,
+        quantity: 1,
+        config: {}
+      };
     });
 
-    const addToCart = () => {
-      addItem({ product: product.value as Product, config: {}, _id: '' });
-    }
-
     return {
-      product,
-      addToCart
+      item,
+      addItem
     }
   }
 });
