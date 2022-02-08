@@ -1,12 +1,13 @@
 import { api, OrderItem } from '@/core';
 import { store } from '@/state';
-import { computed, reactive } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { useAuth } from '../auth';
 
 const CART_STORAGE_KEY = '_CART';
 
 export enum CartActions {
-    ADD_ITEM = 'CART_ADD_ITEM'
+    ADD_ITEM = 'CART_ADD_ITEM',
+    ORDER_SUCCESS = 'CART_ORDER_SUCCESS'
 }
 
 export interface CartState {
@@ -29,13 +30,11 @@ export const useCart = () => {
 
     const addItem = (item: OrderItem) => {
         cartState.items.push(item);
-        syncStorage();
         store.dispatch({ type: CartActions.ADD_ITEM });
     }
 
     const removeItem = (index: number) => {
         cartState.items.splice(index, 1);
-        syncStorage();
     }
 
     const orderCart = () => {
@@ -50,11 +49,22 @@ export const useCart = () => {
             })
 
 
-            api.post('/cart', { user: authState.user._id, items }).subscribe(response => {
-                console.log(response);
+            api.post('/cart', { user: authState.user._id, items }).subscribe({
+                next() {
+                    cartState.items = [];
+                    store.dispatch({ type: CartActions.ORDER_SUCCESS });
+                },
+
+                error() {
+
+                }
             });
         }
     }
+
+    watch(() => cartState.items, (items) => {
+        syncStorage();
+    })
 
     const priceTotal = computed(() => {
         return {
