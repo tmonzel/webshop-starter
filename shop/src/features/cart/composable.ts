@@ -59,7 +59,7 @@ export const useCart = () => {
     const priceTotal = computed(() => {
         return {
             currency: 'EUR',
-            value: cartState.items.reduce((sum, curr) => sum + curr.product.price.value, 0)
+            value: cartState.items.reduce((sum, curr) => sum + curr.quantity * curr.product.price.value, 0).toFixed(2)
         }
     });
 
