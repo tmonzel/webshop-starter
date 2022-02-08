@@ -2,7 +2,7 @@
  * RxJs wrapper for axios 
  * 
  */
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Observable } from 'rxjs';
 
 // Create axios and keep it internal for now
@@ -30,7 +30,17 @@ const post = (path: string, data: any, config?: AxiosRequestConfig): Observable<
     });
 }
 
+const interceptResponse = (onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined) => {
+    httpService.interceptors.response.use(onFulfilled);
+}
+
+const interceptRequest = (onFulfilled?: ((value: AxiosRequestConfig<any>) => AxiosRequestConfig<any> | Promise<AxiosRequestConfig<any>>) | undefined) => {
+    httpService.interceptors.request.use(onFulfilled);
+}
+
 export const http = {
     get,
-    post
+    post,
+    interceptResponse,
+    interceptRequest
 }

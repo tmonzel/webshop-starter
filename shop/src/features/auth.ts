@@ -2,6 +2,7 @@ import { User, api } from '@/core';
 import { store } from '@/state';
 import { computed, reactive } from 'vue';
 import jwt_decode from "jwt-decode";
+import { http } from '@/core';
 
 export enum UserActions {
     REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS',
@@ -119,3 +120,13 @@ export const useLoginForm = () => {
         hasErrors
     }
 }
+
+http.interceptRequest((request) => {
+    const token = localStorage.getItem(AUTH_TOKEN_KEY);
+
+    if(token && request.headers) {
+        request.headers['Authorization'] = 'Bearer ' + token;
+    }
+    
+    return request;
+});
