@@ -6,6 +6,10 @@ import mongoose from 'mongoose';
 import { createAuth } from './auth';
 import { createCart } from './cart';
 import { OrderModel } from './models/order.model';
+import { authRequired } from './middlewares';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env.local' });
 
 mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
 
@@ -20,7 +24,7 @@ mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
     
     // Bind resource endpoints
     createResource(api, ProductModel);
-    createResource(api, OrderModel);
+    createResource(api, OrderModel, [authRequired]);
 
     // Bind auth endpoint
     createAuth(api);

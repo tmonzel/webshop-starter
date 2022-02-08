@@ -3,8 +3,6 @@ import { UserModel } from './models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const AUTH_SECRET = "b05568cc4bd07d72d";
-
 export const createAuth = (app: Express) => {
     app.post('/auth/signup', (req, res) => {
         const user = new UserModel({
@@ -50,13 +48,13 @@ export const createAuth = (app: Express) => {
                   message: "Passwort ungültig."
                 });
             }
-
+            
             // Passed all tests and generate token
             const token = jwt.sign({ 
                 _id: user.id, 
                 username: user.username,
                 email: user.email 
-            }, AUTH_SECRET, {
+            }, process.env.AUTH_SECRET ?? '', {
                 expiresIn: 86400 // 24 hours
             });
 

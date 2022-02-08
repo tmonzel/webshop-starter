@@ -6,6 +6,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.3.1",
@@ -13,7 +14,7 @@
   },
   "scripts": {
     "start": "nodemon src/main.ts",
-    "fixtures:populate":"ts-node src/fixtures.ts"
+    "fixtures:populate": "ts-node src/fixtures.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
