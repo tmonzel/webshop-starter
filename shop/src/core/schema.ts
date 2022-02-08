@@ -2,7 +2,7 @@
  * Abstract mongo document type
  */
 export interface AbstractDocument {
-    _id: string;
+    _id?: string;
 }
 
 /**
@@ -45,5 +45,6 @@ export interface Order extends AbstractDocument {
  */
 export interface OrderItem extends AbstractDocument {
     product: Product;
+    quantity: number;
     config: any;
 }
