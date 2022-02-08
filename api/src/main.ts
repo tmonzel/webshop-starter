@@ -5,6 +5,7 @@ import { ProductModel } from './models/product.model';
 import mongoose from 'mongoose';
 import { createAuth } from './auth';
 import { createCart } from './cart';
+import { OrderModel } from './models/order.model';
 
 mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
 
@@ -19,6 +20,7 @@ mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
     
     // Bind resource endpoints
     createResource(api, ProductModel);
+    createResource(api, OrderModel);
 
     // Bind auth endpoint
     createAuth(api);
