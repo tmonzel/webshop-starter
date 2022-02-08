@@ -11,6 +11,7 @@ const ItemSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product'
     },
+    quantity: Number,
     config: Schema.Types.Mixed
 });
 
