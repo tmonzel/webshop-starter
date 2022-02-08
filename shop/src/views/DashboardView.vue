@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <h1 class="display-3">Mein Laden</h1>
+    <h1>Mein Laden</h1>
     <p class="lead">Unsere beliebtesten Artikel findest du hier</p>
   </div>
 </template>
