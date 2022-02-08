@@ -23,9 +23,6 @@
             <RouterLink class="nav-link" to="/products">Artikel</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/orders">Bestellungen</RouterLink>
-          </li>
-          <li class="nav-item">
             <RouterLink class="nav-link" to="/cart">Warenkorb <span class="badge bg-primary">{{ cart.items.length }}</span></RouterLink>
           </li>
         </ul>
@@ -37,6 +34,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">Profil</a></li>
+              <li><RouterLink class="dropdown-item" to="/orders">Bestellungen</RouterLink></li>
               <li><a class="dropdown-item" href="#" @click="logout">Abmelden</a></li>
             </ul>
           </li>
