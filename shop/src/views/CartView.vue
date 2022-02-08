@@ -3,21 +3,30 @@
     <h1 class="mb-5">Ihr Warenkorb</h1>
     <div class="row">
       <div class="col-md-9">
-        <ul v-if="cart.items.length > 0" class="list-group list-group-flush">
-          <li v-for="(item, index) in cart.items" :key="index" class="list-group-item">
-            <span>
-              {{ item.product.name }} ({{ item.product.type }})
-            </span>
-            <div>
-              <span class="me-3">{{ item.product.price.value }} {{ item.product.price.currency }}</span>
-              <span>
-                <button class="btn p-0 shadow-none" @click="removeItem(index)">
-                  <i class="bi-trash"></i>
-                </button>
-              </span>
+        <div v-if="cart.items.length > 0">
+
+          <div class="card mb-3" v-for="(item, index) in cart.items" :key="index">
+            <div class="row g-0">
+              <div class="col-md-4 bg-light d-flex justify-content-center align-items-center" style="max-width: 250px;">
+                <img :src="item.product.imageUrl" class="img-fluid rounded-start" style="max-height: 150px;">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.product.name }}</h5>
+                  <p class="card-text">{{ item.product.type }}</p>
+                  <p class="card-text d-flex align-items-center">
+                    <input type="number" class="form-control" v-model="item.quantity" style="max-width: 50px" min="1">
+                    <span class="ms-3">{{ (item.quantity * item.product.price.value).toFixed(2) }} {{ item.product.price.currency }}</span>
+                  </p>
+
+                  <button class="btn btn-lg p-0 shadow-none" @click="removeItem(index)">
+                    <i class="bi-trash"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
         <div v-else class="alert alert-info">
           Der Warenkorb ist leer.
         </div>
@@ -67,9 +76,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .list-group-item {
-    align-items: center;
-    justify-content: space-between;
-    display: flex;
-  }
+
 </style>
