@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { UserModel } from './models/user.model';
+import { UserModel, UserRoles } from './models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -8,7 +8,8 @@ export const createAuth = (app: Express) => {
         const user = new UserModel({
             email: req.body.email,
             username: req.body.username,
-            password: bcrypt.hashSync(req.body.password, 8)
+            password: bcrypt.hashSync(req.body.password, 8),
+            roles: [UserRoles.CUSTOMER]
         });
         
         user.save(error => {
@@ -37,19 +38,20 @@ export const createAuth = (app: Express) => {
                 });
             }
 
-            const passwordIsValid = bcrypt.compareSync(
-                req.body.password,
-                user.password
-            );
-            
-            if (!passwordIsValid) {
-                return res.status(401).send({
-                  accessToken: null,
-                  message: "Passwort ungültig."
-                });
+            if(!user.roles.includes(UserRoles.CUSTOMER)) {
+                // User missing customer role
+                return res.sendStatus(402);
             }
             
-            // Passed all tests and generate token
+            if (!bcrypt.compareSync(
+                req.body.password,
+                user.password
+            )) {
+                // Password invalid
+                return res.sendStatus(400);
+            }
+            
+            // Passed all tests. Generating token
             const token = jwt.sign({ 
                 _id: user.id, 
                 username: user.username,
