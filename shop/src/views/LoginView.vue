@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-5 d-flex justify-content-center">
-    <div>
+  <div class="container mt-5">
+    <div style="max-width: 320px">
       <h1 class="mb-5">Anmelden</h1>
       <form 
         @submit.prevent="onSubmit" 
