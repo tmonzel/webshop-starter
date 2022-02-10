@@ -1,54 +1,54 @@
-import { Express } from 'express';
-import { UserModel, UserRoles } from './models/user.model';
+import { Request, Response } from 'express';
+import { UserModel, UserRoles } from '@/models/user.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-export const createAuth = (app: Express) => {
-    app.post('/auth/signup', (req, res) => {
+export const authController = {
+    register(request: Request, response: Response) {
         const user = new UserModel({
-            email: req.body.email,
-            username: req.body.username,
-            password: bcrypt.hashSync(req.body.password, 8),
+            email: request.body.email,
+            username: request.body.username,
+            password: bcrypt.hashSync(request.body.password, 8),
             roles: [UserRoles.CUSTOMER]
         });
         
         user.save(error => {
             if(error) {
-                res.status(400).send(error);
+                response.status(400).send(error);
                 return;
             }
 
             // User successfully saved
-            res.send({ message: "User was registered successfully!" })
+            response.send({ message: "User was registered successfully!" })
         });
-    });
+    },
 
-    app.post('/auth/login', (req, res) => {
+    login(request: Request, response: Response) {
         UserModel.findOne({
-            email: req.body.email
+            email: request.body.email
         }).exec((error, user) => {
             if(error) {
-                res.status(500).send(error);
+                response.status(500).send(error);
                 return;
             }
 
             if (!user) {
-                return res.status(404).send({ 
+                return response.status(404).send({ 
                     message: "Benutzer wurde nicht gefunden." 
                 });
             }
 
             if(!user.roles.includes(UserRoles.CUSTOMER)) {
                 // User missing customer role
-                return res.sendStatus(402);
+                return response.sendStatus(402);
             }
             
             if (!bcrypt.compareSync(
-                req.body.password,
+                request.body.password,
                 user.password
             )) {
                 // Password invalid
-                return res.sendStatus(400);
+                return response.sendStatus(400);
             }
             
             // Passed all tests. Generating token
@@ -61,12 +61,12 @@ export const createAuth = (app: Express) => {
                 expiresIn: 86400 // 24 hours
             });
 
-            res.status(200).send({
+            response.status(200).send({
                 _id: user.id,
                 username: user.username,
                 email: user.email,
                 accessToken: token
             });
-        });
-    })
+        })
+    }
 }

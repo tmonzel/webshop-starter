@@ -1,17 +1,10 @@
 import { Express } from 'express';
-import { ObjectId } from 'mongodb';
-import { Model } from 'mongoose';
+import { ResourceController } from './controller';
 
-export const createResource = <T>(api: Express, model: Model<T>, middlewares: any[] = []) => {
-    api.get("/" + model.collection.name, middlewares, (req, res) => {
-        model.find().then(result => {
-            res.json(result);
-        })
-    });
+export const createResourceFromController = <T>(api: Express, controller: ResourceController) => {
+    api.get("/" + controller.resourceName, controller.uses ? controller.uses : [], controller.index);
 
-    api.get("/" + model.collection.name + "/:id", middlewares, (req, res) => {
-        model.findOne({ _id: new ObjectId(req.params.id) }).then(result => {
-            res.json(result);
-        });
-    });
+    if(controller.pick) {
+        api.get("/" + controller.resourceName + '/:id', controller.uses ? controller.uses : [], controller.pick);
+    }
 }

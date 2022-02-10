@@ -1,13 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import { createResource } from './resource-creator';
-import { ProductModel } from './models/product.model';
+import { createResourceFromController } from './resource-creator';
 import mongoose from 'mongoose';
-import { createAuth } from './auth';
-import { createCart } from './cart';
-import { OrderModel } from './models/order.model';
-import { authRequired } from './middlewares';
 import dotenv from 'dotenv';
+import { orderController } from './controllers/order.controller';
+import { authController } from './controllers/auth.controller';
+import { cartController } from './controllers/cart.controller';
+import { productController } from './controllers/product.controller';
 
 dotenv.config({ path: '.env.local' });
 
@@ -23,14 +22,15 @@ mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
     api.use(express.json());
     
     // Bind resource endpoints
-    createResource(api, ProductModel);
-    createResource(api, OrderModel, [authRequired]);
+    createResourceFromController(api, productController);
+    createResourceFromController(api, orderController);
 
-    // Bind auth endpoint
-    createAuth(api);
+    // Bind cart actions
+    api.post('/cart', cartController.checkout);
 
-    // Bind cart endpoint
-    createCart(api);
+    // Bind auth actions
+    api.post('/signup', authController.register);
+    api.post('/login', authController.login);
 
     api.listen(3000, () => console.log('API ist listening on port 3000'));
 
