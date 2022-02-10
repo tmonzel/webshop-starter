@@ -1,4 +1,4 @@
-import { Request, RequestHandler, RequestParamHandler, Response } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 
 export interface Controller {
     

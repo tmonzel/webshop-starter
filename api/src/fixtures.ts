@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { establishConnection } from './database';
 import { Product, ProductModel } from './models/product.model';
 
 const createProduct = (product: Product): void => {
@@ -13,7 +13,7 @@ const createProduct = (product: Product): void => {
     });
 };
 
-mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
+establishConnection(() => {
     const products: Product[] = [
         {
             name: 'Windows',

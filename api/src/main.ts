@@ -1,16 +1,16 @@
 import express from 'express';
 import cors from 'cors';
 import { createResourceFromController } from './resource-creator';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { orderController } from './controllers/order.controller';
 import { authController } from './controllers/auth.controller';
 import { cartController } from './controllers/cart.controller';
 import { productController } from './controllers/product.controller';
+import { establishConnection } from './database';
 
 dotenv.config({ path: '.env.local' });
 
-mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
+establishConnection(() => {
 
     // Initialize application
     const api = express();
@@ -34,4 +34,4 @@ mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(client => {
 
     api.listen(3000, () => console.log('API ist listening on port 3000'));
 
-}).catch(error => console.error(error));
+});
