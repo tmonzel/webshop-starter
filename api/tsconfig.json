@@ -1,11 +1,24 @@
 {
-    "compilerOptions": {
-      "target": "ES6",
-      "module": "commonjs",
-      "rootDir": "./src",
-      "outDir": "./dist",
-      "esModuleInterop": true,
-      "strict": true,
-      "noImplicitAny": false
-    }
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "rootDir": ".",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+  },
+
+  "include": [
+    "./src/**/*.ts",
+  ],
+  
+  "exclude": [
+    "node_modules"
+  ]
 }
