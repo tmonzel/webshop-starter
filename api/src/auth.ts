@@ -55,7 +55,8 @@ export const createAuth = (app: Express) => {
             const token = jwt.sign({ 
                 _id: user.id, 
                 username: user.username,
-                email: user.email 
+                email: user.email,
+                roles: user.roles
             }, process.env.AUTH_SECRET ?? '', {
                 expiresIn: 86400 // 24 hours
             });
