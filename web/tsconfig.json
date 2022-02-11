@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false,
     "sourceMap": true,
@@ -17,7 +18,9 @@
       "node"
     ],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@shop/*": ["apps/shop/*"],
+      "@admin/*": ["apps/admin/*"]
     },
     "lib": [
       "esnext",
@@ -28,8 +31,9 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.tsx",
     "src/**/*.vue",
+    "apps/**/*.ts",
+    "apps/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],

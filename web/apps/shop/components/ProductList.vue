@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { Product } from '@/core';
-import { router } from '@/routings';
+import { router } from '@shop/routings';
 
 export default defineComponent({
   name: 'ProductList',

@@ -36,7 +36,7 @@
 <script lang="ts">
 import { OrderItem } from '@/core';
 import { productService } from '@/data';
-import { useCart } from '@/features/cart';
+import { useCart } from '@shop/features/cart';
 import { defineComponent, Ref, ref } from 'vue';
 
 export default defineComponent({

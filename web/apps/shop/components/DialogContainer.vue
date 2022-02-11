@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import { UserActions } from '@/features/auth';
-import { CartActions } from '@/features/cart';
+import { UserActions } from '@shop/features/auth';
+import { CartActions } from '@shop/features/cart';
 import { store } from '@/state';
 import { defineComponent, ref } from 'vue';
 import Dialog from './Dialog.vue';

@@ -40,14 +40,11 @@ export const useCart = () => {
     const orderCart = () => {
         if(authState.user) {
             const items = cartState.items.map(item => {
-                console.log(item.product);
-                
                 return {
                     product: item.product._id,
                     config: {}
                 }
             })
-
 
             api.post('/cart', { user: authState.user._id, items }).subscribe({
                 next() {
@@ -62,9 +59,9 @@ export const useCart = () => {
         }
     }
 
-    watch(() => cartState.items, (items) => {
+    watch(() => [...cartState.items], (items) => {
         syncStorage();
-    })
+    }, { deep: true })
 
     const priceTotal = computed(() => {
         return {

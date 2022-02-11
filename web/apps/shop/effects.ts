@@ -1,7 +1,7 @@
 import { UserActions } from './features/auth';
 import { CartActions } from './features/cart';
 import { router } from './routings';
-import { store } from './state';
+import { store } from '@/state';
 
 store.actions$.subscribe(action => {
     switch(action.type) {

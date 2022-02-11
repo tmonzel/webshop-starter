@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { useSignupForm } from '@/features/auth';
+import { useSignupForm } from '@shop/features/auth';
 import { defineComponent } from 'vue';
 import { validate } from '@/directives';
 

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { useOrders } from '@/features/order';
+import { useOrders } from '@shop/features/order';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

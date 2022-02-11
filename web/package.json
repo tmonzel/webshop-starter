@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "cross-env APP_NAME=shop vue-cli-service serve",
+    "admin:serve": "cross-env APP_NAME=admin vue-cli-service serve --port 1337",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -30,6 +31,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
     "sass": "^1.49.7",
