@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-import { UserActions } from '@shop/features/auth';
 import { CartActions } from '@shop/features/cart';
 import { store } from '@/state';
 import { defineComponent, ref } from 'vue';
@@ -28,7 +27,7 @@ export default defineComponent({
   mounted() {
     store.actions$.subscribe(action => {
       switch(action.type) {
-        case UserActions.REGISTER_SUCCESS:
+        case 'REGISTER_SUCCESS':
           this.signupSuccessDialog?.open();
           break;
         case CartActions.ORDER_SUCCESS:

@@ -1,44 +1,7 @@
 import { User, api } from '@/core';
+import { FormState } from '@/forms';
 import { store } from '@/state';
-import { computed, reactive } from 'vue';
-import jwt_decode from "jwt-decode";
-import { http } from '@/core';
-
-export enum UserActions {
-    REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS',
-    LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS',
-    LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS'
-}
-
-export const AUTH_TOKEN_KEY = 'AUTH_TOKEN';
-
-export interface AuthState {
-    user: User | null;
-}
-
-export interface FormState {
-    errors: any;
-    data: any;
-}
-
-const authToken = localStorage.getItem(AUTH_TOKEN_KEY);
-
-const authState = reactive<AuthState>({
-    user: authToken ? jwt_decode(authToken) as User : null
-});
-
-export const useAuth = () => {
-    const logout = () => {
-        authState.user = null;
-        localStorage.removeItem(AUTH_TOKEN_KEY);
-        store.dispatch({ type: UserActions.LOGOUT_SUCCESS });
-    }
-
-    return {
-        state: authState,
-        logout
-    }
-}
+import { reactive } from 'vue';
 
 export const useSignupForm = () => {
     const form = reactive<FormState>({
@@ -55,7 +18,7 @@ export const useSignupForm = () => {
         api.post('/auth/signup', user).subscribe({ 
             next() {
                 // Success
-                store.dispatch({ type: UserActions.REGISTER_SUCCESS });
+                store.dispatch({ type: 'REGISTER_SUCCESS' });
 
                 // Reset form
                 form.errors = null;
@@ -75,58 +38,3 @@ export const useSignupForm = () => {
         submit
     }
 }
-
-export const useLoginForm = () => {
-    const form = reactive<FormState>({
-        errors: null,
-        data: {
-            email: '',
-            password: ''
-        }
-    });
-
-    const submit = (email: string, password: string) => {
-        api.post('/auth/login', { email, password }).subscribe({ 
-            next(response) {
-                // Success
-                store.dispatch({ type: UserActions.LOGIN_SUCCESS });
-
-                // Reset form
-                form.errors = null;
-                form.data.email = '';
-                form.data.password = '';
-
-                authState.user = jwt_decode(response.accessToken);
-                localStorage.setItem(AUTH_TOKEN_KEY, response.accessToken);
-            },
-
-            error(error) {
-                if(error.response.data.errors) {
-                    form.errors = error.response.data.errors
-                } else {
-                    form.errors = {
-                        remoteError: error.response.data
-                    };
-                }
-            }
-        });
-    }
-
-    const hasErrors = computed(() => form.errors ? Object.keys(form.errors).length > 0 : false);
-
-    return {
-        form, 
-        submit,
-        hasErrors
-    }
-}
-
-http.interceptRequest((request) => {
-    const token = localStorage.getItem(AUTH_TOKEN_KEY);
-
-    if(token && request.headers) {
-        request.headers['Authorization'] = 'Bearer ' + token;
-    }
-    
-    return request;
-});

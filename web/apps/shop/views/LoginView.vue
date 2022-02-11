@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { useLoginForm } from '@shop/features/auth';
+import { useLoginForm } from '@/auth/composables';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

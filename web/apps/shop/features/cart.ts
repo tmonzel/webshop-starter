@@ -1,7 +1,7 @@
 import { api, OrderItem } from '@/core';
 import { store } from '@/state';
 import { computed, reactive, watch } from 'vue'
-import { useAuth } from './auth';
+import { useAuth } from '@/auth/composables';
 
 const CART_STORAGE_KEY = '_CART';
 

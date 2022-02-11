@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { useAuth } from '@shop/features/auth';
+import { useAuth } from '@/auth/composables';
 import { useCart } from '@shop/features/cart';
 import { defineComponent } from 'vue';
 
