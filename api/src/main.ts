@@ -29,8 +29,8 @@ establishConnection(() => {
     api.post('/cart', cartController.checkout);
 
     // Bind auth actions
-    api.post('/signup', authController.register);
-    api.post('/login', authController.login);
+    api.post('/auth/signup', authController.register);
+    api.post('/auth/login', authController.login);
 
     api.listen(3000, () => console.log('API ist listening on port 3000'));
 
