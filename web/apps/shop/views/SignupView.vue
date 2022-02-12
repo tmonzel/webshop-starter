@@ -3,8 +3,9 @@
     <div style="max-width: 320px">
       <h1 class="mb-5">Registrieren</h1>
       <form 
-        @submit.prevent="onSubmit" 
-        :class="{ 'was-validated': showValidations && !form.errors?.email }" 
+        ref="form"
+        @submit.prevent="submit" 
+        :class="{ 'was-validated': state.wasValidated && !state.errors?.email }" 
         novalidate
       >
         <div class="mb-3">
@@ -14,12 +15,12 @@
             type="email" 
             class="form-control form-control-lg" 
             placeholder="E-Mail"
-            v-model="form.data.email"
-            :class="{ 'is-invalid': form.errors?.email }"
+            v-model="state.data.email"
+            :class="{ 'is-invalid': state.errors?.email }"
             required
           >
-          <div class="invalid-feedback" v-if="form.errors?.email">
-            {{ form.errors.email.message }}
+          <div class="invalid-feedback" v-if="state.errors?.email">
+            {{ state.errors.email.message }}
           </div>
           <div class="invalid-feedback" v-else>
             Sie müssen eine korrekte E-Mail eingeben
@@ -32,7 +33,7 @@
             type="text" 
             class="form-control form-control-lg" 
             placeholder="Benutzername"
-            v-model="form.data.username"
+            v-model="state.data.username"
             required
           >
           <div class="invalid-feedback">
@@ -46,7 +47,7 @@
             type="password" 
             class="form-control form-control-lg" 
             placeholder="Passwort"
-            v-model="form.data.password"
+            v-model="state.data.password"
             required
           >
           <div class="invalid-feedback">
@@ -58,8 +59,8 @@
             type="password" 
             class="form-control form-control-lg" 
             placeholder="Passwort bestätigen"
-            v-model="form.data.passwordConfirm"
-            v-validate="form.data.passwordConfirm !== form.data.password"
+            v-model="state.data.passwordConfirm"
+            v-validate="state.data.passwordConfirm !== state.data.password"
             required
           >
           <div class="invalid-feedback">
@@ -75,7 +76,7 @@
 </template>
 
 <script lang="ts">
-import { useSignupForm } from '@shop/features/auth';
+import { useSignupForm } from '@shop/features/signup';
 import { defineComponent } from 'vue';
 import { validate } from '@/directives';
 
@@ -85,32 +86,9 @@ export default defineComponent({
     validate
   },
 
-  data() {
-    return {
-      showValidations: false
-    }
-  },
-
-  methods: {
-    onSubmit(e: Event) {
-      const form = e.target as HTMLFormElement;
-
-      if (!form.checkValidity()) {
-        // Show errors
-        this.showValidations = true;
-        return;
-      }
-
-      this.submit(this.form.data);
-    }
-  },
-
   setup() {
-    const { form, submit } = useSignupForm();
-
     return {
-      form,
-      submit,
+      ...useSignupForm()
     }
   },
 });
