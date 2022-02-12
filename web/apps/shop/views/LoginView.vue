@@ -3,8 +3,9 @@
     <div style="max-width: 320px">
       <h1 class="mb-5">Anmelden</h1>
       <form 
-        @submit.prevent="onSubmit" 
-        :class="{ 'was-validated': showValidations && !form.errors?.email }" 
+        ref="form"
+        @submit.prevent="submit" 
+        :class="{ 'was-validated': state.wasValidated && !state.errors?.email }" 
         novalidate
       >
         <div class="mb-3">
@@ -12,12 +13,12 @@
             type="email" 
             class="form-control form-control-lg" 
             placeholder="E-Mail"
-            v-model="form.data.email"
-            :class="{ 'is-invalid': form.errors?.email }"
+            v-model="state.data.email"
+            :class="{ 'is-invalid': state.errors?.email }"
             required
           >
-          <div class="invalid-feedback" v-if="form.errors?.email">
-            {{ form.errors.email.message }}
+          <div class="invalid-feedback" v-if="state.errors?.email">
+            {{ state.errors.email.message }}
           </div>
           <div class="invalid-feedback" v-else>
             Sie müssen eine korrekte E-Mail eingeben
@@ -28,7 +29,7 @@
             type="password" 
             class="form-control form-control-lg" 
             placeholder="Password"
-            v-model="form.data.password"
+            v-model="state.data.password"
             required
           >
           <div class="invalid-feedback">
@@ -51,44 +52,15 @@
 </template>
 
 <script lang="ts">
-import { useLoginForm } from '@/auth/composables';
+import { useLoginForm } from '@/auth';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'LoginView',
 
-  data() {
-    return {
-      showValidations: false
-    }
-  },
-
-  methods: {
-    onSubmit(e: Event) {
-      const form = e.target as HTMLFormElement;
-
-      if (!form.checkValidity()) {
-        // Show errors
-        this.showValidations = true;
-        return;
-      }
-
-      const formData = this.form.data;
-
-      this.submit(
-        formData.email, 
-        formData.password
-      );
-    }
-  },
-
   setup() {
-    const { form, submit, hasErrors } = useLoginForm();
-
     return {
-      form,
-      submit,
-      hasErrors
+      ...useLoginForm()
     }
   },
 });
