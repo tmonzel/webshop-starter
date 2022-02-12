@@ -1,5 +1,1 @@
-export interface FormState {
-    errors: any;
-    data: any;
-    wasValidated: boolean;
-}
+export * from './form.state';
