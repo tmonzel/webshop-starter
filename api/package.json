@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "nodemon -r tsconfig-paths/register src/main.ts",
-    "fixtures:populate": "ts-node src/fixtures.ts"
+    "fixtures:populate": "ts-node src/fixtures.ts",
+    "admin:create": "ts-node src/commands/create-admin.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
