@@ -27,15 +27,15 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav" v-if="auth.user">
+        <ul class="navbar-nav" v-if="auth.state.user">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ auth.user.email }}
+              {{ auth.state.user.email }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">Profil</a></li>
               <li><RouterLink class="dropdown-item" to="/orders">Bestellungen</RouterLink></li>
-              <li><a class="dropdown-item" href="#" @click="logout">Abmelden</a></li>
+              <li><a class="dropdown-item" href="#" @click="auth.logout">Abmelden</a></li>
             </ul>
           </li>
         </ul>
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { useAuth } from '@/auth';
+import { auth } from '@shop/auth';
 import { useCart } from '@shop/features/cart';
 import { defineComponent } from 'vue';
 
@@ -64,12 +64,10 @@ export default defineComponent({
 
   setup() {
     const { state: cart } = useCart();
-    const { state: auth, logout } = useAuth();
 
     return {
       cart,
       auth,
-      logout
     }
   }
 });

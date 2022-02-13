@@ -1,7 +1,7 @@
 import { api, OrderItem } from '@/core';
 import { store } from '@/state';
-import { computed, reactive, watch } from 'vue'
-import { useAuth } from '@/auth';
+import { auth } from '../auth';
+import { computed, reactive, watch } from 'vue';
 
 const CART_STORAGE_KEY = '_CART';
 
@@ -26,7 +26,6 @@ const syncStorage = () => {
 }
 
 export const useCart = () => {
-    const { state: authState } = useAuth();
 
     const addItem = (item: OrderItem) => {
         cartState.items.push(item);
@@ -38,7 +37,7 @@ export const useCart = () => {
     }
 
     const orderCart = () => {
-        if(authState.user) {
+        if(auth.state.user) {
             const items = cartState.items.map(item => {
                 return {
                     product: item.product._id,
@@ -46,7 +45,7 @@ export const useCart = () => {
                 }
             })
 
-            api.post('/cart', { user: authState.user._id, items }).subscribe({
+            api.post('/cart', { user: auth.state.user._id, items }).subscribe({
                 next() {
                     cartState.items = [];
                     store.dispatch({ type: CartActions.ORDER_SUCCESS });

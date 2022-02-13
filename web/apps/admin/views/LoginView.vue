@@ -29,9 +29,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import { FormControl } from '@/forms/components';
-import { useLoginForm } from '@/auth';
+import { FormState } from '@/forms';
+import { auth } from '@admin/auth';
 
 export default defineComponent({
   name: 'LoginView',
@@ -40,8 +41,46 @@ export default defineComponent({
   },
 
   setup() {
+    const form = ref<InstanceType<typeof HTMLFormElement> | null>(null);
+    const state: FormState = reactive({
+      errors: null,
+      wasValidated: false,
+      data: {
+        username: '',
+        password: ''
+      }
+    });
+
+    const submit = () => {
+      if (!form.value?.checkValidity()) {
+        // Show errors
+        state.wasValidated = true;
+        return;
+      }
+
+      auth.login(state.data.username, state.data.password).subscribe({
+        next: (user) => {
+          // Reset form state
+          state.data.username = '';
+          state.data.password = '';
+        },
+
+        error: (error) => {
+          if(error.response.data.errors) {
+            state.errors = error.response.data.errors
+          } else {
+            state.errors = {
+              remoteError: error.response.data
+            };
+          }
+        }
+      });
+    }
+    
     return {
-      ...useLoginForm()
+      form,
+      state,
+      submit
     }
   }
 });

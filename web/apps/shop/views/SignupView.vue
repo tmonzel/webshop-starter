@@ -76,9 +76,11 @@
 </template>
 
 <script lang="ts">
-import { useSignupForm } from '@/auth';
-import { defineComponent } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import { validate } from '@/directives';
+import { FormState } from '@/forms';
+import { api } from '@/core';
+import { store } from '@/state';
 
 export default defineComponent({
   name: 'SignupView',
@@ -87,8 +89,48 @@ export default defineComponent({
   },
 
   setup() {
+    const form = ref<InstanceType<typeof HTMLFormElement> | null>(null);
+    const state: FormState = reactive({
+      errors: null,
+      wasValidated: false,
+      data: {
+        email: '',
+        username: '',
+        password: '',
+        passwordConfirm: ''
+      }
+    });
+
+    const submit = () => {
+      if (!form.value?.checkValidity()) {
+        // Show errors
+        state.wasValidated = true;
+        return;
+      }
+
+      api.post('/auth/signup', state.data).subscribe({ 
+        next() {
+            // Success
+            store.dispatch({ type: 'REGISTER_SUCCESS' });
+
+            // Reset form
+            state.errors = null;
+            state.data.email = '';
+            state.data.username = '';
+            state.data.password = '';
+            state.data.passwordConfirm = '';
+        },
+
+        error(error) {
+            state.errors = error.response.data.errors;
+        }
+      });
+    }
+
     return {
-      ...useSignupForm()
+        form,
+        state, 
+        submit
     }
   },
 });

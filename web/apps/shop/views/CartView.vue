@@ -38,7 +38,7 @@
           </div>
         </div>
 
-        <div class="d-flex justify-content-end" v-if="auth.user">
+        <div class="d-flex justify-content-end" v-if="auth.state.user">
           <button class="btn btn-lg btn-primary" @click="orderCart" :disabled="cart.items.length === 0">Bestellen</button>
         </div>
 
@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts">
-import { useAuth } from '@/auth';
+import { auth } from '@shop/auth';
 import { useCart } from '@shop/features/cart';
 import { defineComponent } from 'vue';
 
@@ -62,7 +62,6 @@ export default defineComponent({
 
   setup() {
     const { state: cart, removeItem, orderCart, priceTotal } = useCart();
-    const { state: auth } = useAuth();
 
     return {
       cart,

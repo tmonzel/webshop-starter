@@ -36,7 +36,7 @@
             Sie müssen ein Passwort eingeben
           </div>
         </div>
-        <div class="alert alert-danger" v-if="hasErrors">
+        <div class="alert alert-danger" v-if="state.errors">
           Anmeldung fehlgeschlagen.<br>
           Überprüfen Sie Ihre Zugangsdaten
         </div>
@@ -47,20 +47,58 @@
       </form>
     </div>
   </div>
-
   
 </template>
 
 <script lang="ts">
-import { useLoginForm } from '@/auth';
-import { defineComponent } from 'vue';
+import { FormState } from '@/forms';
+import { auth } from '@shop/auth';
+import { defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent({
   name: 'LoginView',
 
   setup() {
+    const form = ref<InstanceType<typeof HTMLFormElement> | null>(null);
+    const state: FormState = reactive({
+      errors: null,
+      wasValidated: false,
+      data: {
+        username: '',
+        password: ''
+      }
+    });
+
+    const submit = () => {
+      if (!form.value?.checkValidity()) {
+        // Show errors
+        state.wasValidated = true;
+        return;
+      }
+
+      auth.login(state.data.username, state.data.password).subscribe({
+        next: (user) => {
+          // Reset form state
+          state.data.username = '';
+          state.data.password = '';
+        },
+
+        error: (error) => {
+          if(error.response.data.errors) {
+            state.errors = error.response.data.errors
+          } else {
+            state.errors = {
+              remoteError: error.response.data
+            };
+          }
+        }
+      });
+    }
+    
     return {
-      ...useLoginForm()
+      form,
+      state,
+      submit
     }
   },
 });
