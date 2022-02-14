@@ -39,6 +39,14 @@ export const createAuth = (config: AuthConfig) => {
         return config.allowedRoles.filter(role => roles.includes(role)).length > 0;
     }
 
+    const isLoggedIn = (): boolean => {
+        return state.user !== null;
+    }
+
+    const isAllowed = (): boolean => {
+        return state.user !== null && rolesAllowed(state.user.roles);
+    }
+
     http.interceptRequest(request => {
         const token = localStorage.getItem(config.tokenKey);
     
@@ -60,6 +68,8 @@ export const createAuth = (config: AuthConfig) => {
     return {
         logout,
         login,
-        state
+        state,
+        isLoggedIn,
+        isAllowed,
     }
 }

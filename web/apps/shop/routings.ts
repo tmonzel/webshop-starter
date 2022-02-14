@@ -1,4 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { auth } from './auth';
+
+const authGuard = () => {
+    // Redirect to login page if user not allowed
+    if(!auth.isAllowed()) {
+        return { path: '/login' }
+    }
+
+    return true;
+}
 
 const router = createRouter({
     history: createWebHistory('/'),
@@ -20,7 +30,15 @@ const router = createRouter({
         {
             path: '/login',
             name: 'Login',
-            component: () => import('./views/LoginView.vue')
+            component: () => import('./views/LoginView.vue'),
+            beforeEnter: () => {
+                // Redirect to landing page if user logged in
+                if(auth.isLoggedIn()) {
+                    return { path: '/' }
+                }
+
+                return true;
+            }
         },
 
         {
@@ -39,7 +57,8 @@ const router = createRouter({
         {
             path: '/orders',
             name: 'Orders',
-            component: () => import('./views/OrdersView.vue')
+            component: () => import('./views/OrdersView.vue'),
+            beforeEnter: [authGuard]
         },
 
         {
