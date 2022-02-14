@@ -22,19 +22,21 @@ export const createAuth = (config: AuthConfig) => {
     const login = (username: string, password: string): Observable<User> => {
         return api.post('/auth/login', { username, password }).pipe(map(response => {
             const user = jwt_decode(response.accessToken) as User;
-            const hasAllowedRoles = config.allowedRoles.filter(role => user.roles.includes(role)).length > 0;
 
-            if(!hasAllowedRoles) {
+            if(!rolesAllowed(user.roles)) {
                 throw new Error("User is not allowed");
             } else {
                 state.user = user;
                 localStorage.setItem(config.tokenKey, response.accessToken);
-                // Success
                 store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
             }
 
             return state.user as User;
         }))
+    }
+
+    const rolesAllowed = (roles: string[]): boolean => {
+        return config.allowedRoles.filter(role => roles.includes(role)).length > 0;
     }
 
     http.interceptRequest(request => {
@@ -45,6 +47,14 @@ export const createAuth = (config: AuthConfig) => {
         }
         
         return request;
+    });
+
+    http.interceptResponse(response => {
+        if(state.user && !rolesAllowed(state.user.roles)) {
+            logout();
+        }
+
+        return response;
     });
 
     return {
