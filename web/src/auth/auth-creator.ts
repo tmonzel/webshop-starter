@@ -21,12 +21,17 @@ export const createAuth = (config: AuthConfig) => {
 
     const login = (username: string, password: string): Observable<User> => {
         return api.post('/auth/login', { username, password }).pipe(map(response => {
-            state.user = jwt_decode(response.accessToken);
-            localStorage.setItem(config.tokenKey, response.accessToken);
-            // Success
-            store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
+            const user = jwt_decode(response.accessToken) as User;
+            const hasAllowedRoles = config.allowedRoles.filter(role => user.roles.includes(role)).length > 0;
 
-            // TODO: Check if role accepted, otherwise throw error
+            if(!hasAllowedRoles) {
+                throw new Error("User is not allowed");
+            } else {
+                state.user = user;
+                localStorage.setItem(config.tokenKey, response.accessToken);
+                // Success
+                store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
+            }
 
             return state.user as User;
         }))

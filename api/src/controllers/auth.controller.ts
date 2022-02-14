@@ -37,11 +37,6 @@ export const authController = {
                     message: "Benutzer wurde nicht gefunden." 
                 });
             }
-
-            if(!user.roles.includes(UserRoles.CUSTOMER)) {
-                // User missing customer role
-                return response.sendStatus(402);
-            }
             
             if (!bcrypt.compareSync(
                 request.body.password,
