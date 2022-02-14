@@ -25,7 +25,7 @@ export const authController = {
 
     login(request: Request, response: Response) {
         UserModel.findOne({
-            email: request.body.email
+            username: request.body.username
         }).exec((error, user) => {
             if(error) {
                 response.status(500).send(error);

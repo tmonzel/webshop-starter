@@ -10,18 +10,18 @@
       >
         <div class="mb-3">
           <input 
-            type="email" 
+            type="text" 
             class="form-control form-control-lg" 
-            placeholder="E-Mail"
-            v-model="state.data.email"
-            :class="{ 'is-invalid': state.errors?.email }"
+            placeholder="Benutzer"
+            v-model="state.data.username"
+            :class="{ 'is-invalid': state.errors?.username }"
             required
           >
-          <div class="invalid-feedback" v-if="state.errors?.email">
-            {{ state.errors.email.message }}
+          <div class="invalid-feedback" v-if="state.errors?.username">
+            {{ state.errors.username.message }}
           </div>
           <div class="invalid-feedback" v-else>
-            Sie müssen eine korrekte E-Mail eingeben
+            Sie müssen einen Benutzernamen eingeben
           </div>
         </div>
         <div class="mb-3">
