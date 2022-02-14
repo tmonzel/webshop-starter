@@ -1,6 +1,12 @@
 <template>
   <div class="container d-flex justify-content-center mt-5">
-    <form ref="form" :class="{ 'was-validated': state.wasValidated }" style="width: 280px;" novalidate>
+    <form 
+      ref="form" 
+      @submit.prevent="submit" 
+      :class="{ 'was-validated': state.wasValidated }" 
+      style="width: 280px;" 
+      novalidate
+    >
       <h1 class="mb-4">Shop Admin</h1>
       
       <div class="mb-3">
@@ -23,7 +29,12 @@
         />
       </div>
 
-      <button type="button" class="btn btn-lg btn-primary" @click="submit">Anmelden</button>
+      <div class="alert alert-danger" v-if="state.errors">
+        Anmeldung fehlgeschlagen.<br>
+        Überprüfen Sie Ihre Zugangsdaten
+      </div>
+
+      <button type="submit" class="btn btn-lg btn-primary">Anmelden</button>
     </form>
   </div>
 </template>
