@@ -62,9 +62,6 @@ export const authController = {
             });
 
             response.status(200).send({
-                _id: user.id,
-                username: user.username,
-                email: user.email,
                 accessToken: token
             });
         })
