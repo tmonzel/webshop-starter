@@ -66,11 +66,18 @@ export default defineComponent({
         },
 
         error: (error) => {
-          if(error.response.data.errors) {
-            state.errors = error.response.data.errors
+          if(error.response) {
+            if(error.response.data.errors) {
+              state.errors = error.response.data.errors
+            } else {
+              state.errors = {
+                remoteError: error.response.data
+              };
+            }
           } else {
+            // Client error
             state.errors = {
-              remoteError: error.response.data
+                error: error.message
             };
           }
         }
