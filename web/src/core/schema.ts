@@ -12,6 +12,7 @@ export interface User extends AbstractDocument {
     email: string;
     username: string;
     password?: string;
+    roles: string[];
 }
 
 /**
