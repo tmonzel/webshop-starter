@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div>
     <h1>Shop Admin</h1>
     <p class="lead">Hier kannst du alles einstellen.</p>
   </div>
