@@ -8,13 +8,13 @@ interface ProductState {
     searchText: string;
 } 
 
-const initialState: ProductState = {
+const INIT_STATE: ProductState = {
     items: [],
     loadedItem: null,
     searchText: ''
 }
 
-export const useProducts = () => {
+export const useProducts = (initialState: ProductState = INIT_STATE) => {
     const state = reactive(initialState);
 
     const loadAll = () => {

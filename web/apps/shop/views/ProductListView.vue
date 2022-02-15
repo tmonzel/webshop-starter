@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { useProducts } from '@shop/features/product';
+import { useProducts } from '@/composables';
 import { defineComponent } from 'vue';
 import { ProductList } from '../components';
 
