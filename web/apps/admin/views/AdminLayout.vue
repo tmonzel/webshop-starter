@@ -13,7 +13,7 @@
           <router-link class="nav-link" to="/products">Produkte</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/orders">Bestellungen</router-link>
+          <router-link class="nav-link" to="/customers">Kunden</router-link>
         </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/users">Benutzer</router-link>

@@ -4,14 +4,14 @@
     <table class="table">
       <thead>
           <tr>
-            <th scope="col">#</th>
+            <th scope="col" class="nostretch">#</th>
             <th scope="col">Kunde</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="p in state.items" :key="p._id">
-            <th scope="row">{{ p._id }}</th>
-            <td>{{ p.user?.username }}</td>
+          <tr v-for="customer in state.items" :key="customer._id">
+            <th scope="row">{{ customer._id }}</th>
+            <td>{{ customer.lastName }}, {{ customer.firstName }}</td>
           </tr>
         </tbody>
     </table>
@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
-import { useOrders } from '@/composables';
+import { useCustomers, useOrders } from '@/composables';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'OrdersView',
+  name: 'CustomersView',
 
   setup() {
-    const { state, loadAll } = useOrders();
+    const { state, loadAll } = useCustomers();
 
     loadAll();
 
