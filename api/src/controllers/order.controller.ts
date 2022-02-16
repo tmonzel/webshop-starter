@@ -22,7 +22,7 @@ export const orderController: ResourceController = {
                 response.json(result);
             });
         } else {
-            OrderModel.find().then(result => {
+            OrderModel.find().populate('user').then(result => {
                 response.json(result);
             });
         }

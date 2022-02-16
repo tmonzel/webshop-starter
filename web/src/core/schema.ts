@@ -38,6 +38,7 @@ export interface Product extends AbstractDocument {
 export interface Order extends AbstractDocument {
     state: 'ordered' | 'cart';
     items: OrderItem[];
+    user?: User;
 }
 
 /**
