@@ -2,5 +2,6 @@
 $modal-fade-transform: scale(.97);
 $modal-transition: transform .2s ease-out;
 
+@import "@/core.scss";
 @import "bootstrap/scss/bootstrap";
 @import "~bootstrap-icons/font/bootstrap-icons.css";
