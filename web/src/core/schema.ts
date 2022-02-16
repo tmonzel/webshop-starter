@@ -9,10 +9,16 @@ export interface AbstractDocument {
  * Benutzer 
  */
 export interface User extends AbstractDocument {
-    email: string;
     username: string;
     password?: string;
     roles: string[];
+}
+
+export interface Customer extends User {
+    email: string;
+    firstName: string;
+    lastName: string;
+    address: string;
 }
 
 /**
