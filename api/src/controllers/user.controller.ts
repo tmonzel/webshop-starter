@@ -3,7 +3,7 @@ import { User, UserModel } from '@/models/user.model';
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 
-const userSerializer = (user: User): any => {
+export const userSerializer = (user: User): any => {
     return { 
         ...user.toJSON(), 
         password: undefined, // Remove password from user,
