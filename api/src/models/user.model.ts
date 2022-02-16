@@ -6,25 +6,12 @@ export enum UserRoles  {
 }
 
 export interface User extends Document {
-    email: string;
     username: string;
     password: string;
     roles: UserRoles[];
 }
 
 const schema = new Schema<User>({
-    email: { 
-        type: String, 
-        required: true, 
-        validate: {
-            type: 'existsAlready',
-            validator: async function(email) {
-                const user = await UserModel.findOne({ email });
-                return user ? false : true;
-            },
-            message: () => 'Ihre E-Mail Adresse existiert bereits. Wählen Sie eine andere'
-        }, 
-    },
     username: { type: String, required: true },
     password: { type: String },
     roles: []
