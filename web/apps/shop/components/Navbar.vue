@@ -30,7 +30,7 @@
         <ul class="navbar-nav" v-if="auth.state.user">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ auth.state.user.email }}
+              {{ auth.state.user.username }}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">Profil</a></li>
