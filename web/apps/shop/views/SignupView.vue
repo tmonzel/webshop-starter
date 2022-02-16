@@ -1,70 +1,141 @@
 <template>
   <div class="container mt-5">
-    <div style="max-width: 320px">
-      <h1 class="mb-5">Registrieren</h1>
+    <div style="max-width: 640px;">
+      <h1>Werden Sie Kunde!</h1>
+      <p class="lead mb-5">Profitieren sie aus unserem reichhaltigen Angebot an Krims und Krams</p>
       <form 
         ref="form"
         @submit.prevent="submit" 
         :class="{ 'was-validated': state.wasValidated && !state.errors?.email }" 
         novalidate
       >
-        <div class="mb-3">
-          <label for="emailControl" class="form-label">E-Mail</label>
-          <input 
-            id="emailControl"
-            type="email" 
-            class="form-control form-control-lg" 
-            placeholder="E-Mail"
-            v-model="state.data.email"
-            :class="{ 'is-invalid': state.errors?.email }"
-            required
-          >
-          <div class="invalid-feedback" v-if="state.errors?.email">
-            {{ state.errors.email.message }}
+        <div class="rounded bg-light p-3 mb-3">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <label for="usernameControl" class="form-label">Benutzername</label>
+              <input 
+                id="usernameControl"
+                type="text" 
+                class="form-control form-control-lg" 
+                placeholder="Benutzername"
+                v-model="state.data.username"
+                required
+              >
+              <div class="invalid-feedback">
+                Sie müssen einen Benutzernamen eingeben
+              </div>
+            </div>
           </div>
-          <div class="invalid-feedback" v-else>
-            Sie müssen eine korrekte E-Mail eingeben
+
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="passwordControl" class="form-label">Passwort</label>
+                <input 
+                  id="passwordControl"
+                  type="password" 
+                  class="form-control form-control-lg" 
+                  placeholder="Passwort"
+                  v-model="state.data.password"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Sie müssen ein Passwort eingeben.
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="mb-3">
+                <label for="passwordConfirmControl" class="form-label">&nbsp;</label>
+                <input 
+                  id="passwordConfirmControl"
+                  type="password" 
+                  class="form-control form-control-lg" 
+                  placeholder="Passwort bestätigen"
+                  v-model="passwordConfirm"
+                  v-validate="passwordConfirm !== state.data.password"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Sie müssen das Passwort korrekt bestätigen.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="mb-3">
-          <label for="usernameControl" class="form-label">Benutzername</label>
-          <input 
-            id="usernameControl"
-            type="text" 
-            class="form-control form-control-lg" 
-            placeholder="Benutzername"
-            v-model="state.data.username"
-            required
-          >
-          <div class="invalid-feedback">
-            Sie müssen einen Benutzernamen eingeben
+        <div class="rounded bg-light p-3 mb-3">
+          <h5>Persönliche Daten</h5>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="emailControl" class="form-label">E-Mail</label>
+                <input 
+                  id="emailControl"
+                  type="email" 
+                  class="form-control form-control-lg" 
+                  placeholder="E-Mail"
+                  v-model="state.data.email"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Sie müssen eine korrekte E-Mail eingeben
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="passwordControl" class="form-label">Passwort</label>
-          <input 
-            id="passwordControl"
-            type="password" 
-            class="form-control form-control-lg" 
-            placeholder="Passwort"
-            v-model="state.data.password"
-            required
-          >
-          <div class="invalid-feedback">
-            Sie müssen ein Passwort eingeben.
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="firstNameControl" class="form-label">Vorname</label>
+                <input 
+                  id="firstNameControl"
+                  type="text" 
+                  class="form-control form-control-lg" 
+                  placeholder="Vorname"
+                  v-model="state.data.firstName"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Sie müssen einen Vornamen eingeben
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label for="lastNameControl" class="form-label">Nachname</label>
+                <input 
+                  id="lastNameControl"
+                  type="text" 
+                  class="form-control form-control-lg" 
+                  placeholder="Nachname"
+                  v-model="state.data.lastName"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Sie müssen einen Nachnamen eingeben
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <input 
-            type="password" 
-            class="form-control form-control-lg" 
-            placeholder="Passwort bestätigen"
-            v-model="state.data.passwordConfirm"
-            v-validate="state.data.passwordConfirm !== state.data.password"
-            required
-          >
-          <div class="invalid-feedback">
-            Sie müssen das Passwort korrekt bestätigen.
+
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label for="addressControl" class="form-label">Adresse</label>
+                <input 
+                  id="addressControl"
+                  type="text" 
+                  class="form-control form-control-lg" 
+                  placeholder="Adresse"
+                  v-model="state.data.address"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Sie müssen eine Adresse eingeben
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <button type="submit" class="btn btn-lg btn-primary">Abschicken</button>
@@ -90,15 +161,18 @@ export default defineComponent({
 
   setup() {
     const form = ref<InstanceType<typeof HTMLFormElement> | null>(null);
+    const passwordConfirm = ref('');
     const state: FormState = reactive({
       errors: null,
       wasValidated: false,
       data: {
-        email: '',
         username: '',
         password: '',
-        passwordConfirm: ''
-      }
+        firstName: '',
+        lastName: '',
+        address: '',
+        email: ''
+      },
     });
 
     const submit = () => {
@@ -108,17 +182,21 @@ export default defineComponent({
         return;
       }
 
-      api.post('/auth/signup', state.data).subscribe({ 
+      api.post('/customers', state.data).subscribe({ 
         next() {
             // Success
             store.dispatch({ type: 'REGISTER_SUCCESS' });
 
             // Reset form
             state.errors = null;
-            state.data.email = '';
             state.data.username = '';
             state.data.password = '';
-            state.data.passwordConfirm = '';
+            state.data.firstName = '';
+            state.data.lastName = '';
+            state.data.address = '';
+            state.data.email = '';
+            
+            passwordConfirm.value = '';
         },
 
         error(error) {
@@ -130,7 +208,8 @@ export default defineComponent({
     return {
         form,
         state, 
-        submit
+        submit,
+        passwordConfirm
     }
   },
 });
