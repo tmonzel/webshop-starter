@@ -7,6 +7,7 @@ import { authController } from './controllers/auth.controller';
 import { cartController } from './controllers/cart.controller';
 import { productController } from './controllers/product.controller';
 import { establishConnection } from './database';
+import { userController } from './controllers/user.controller';
 
 dotenv.config({ path: '.env.local' });
 
@@ -24,6 +25,7 @@ establishConnection(() => {
     // Bind resource endpoints
     createResourceFromController(api, productController);
     createResourceFromController(api, orderController);
+    createResourceFromController(api, userController);
 
     // Bind cart actions
     api.post('/cart', cartController.checkout);
@@ -32,6 +34,6 @@ establishConnection(() => {
     api.post('/auth/signup', authController.register);
     api.post('/auth/login', authController.login);
 
-    api.listen(3000, () => console.log('API ist listening on port 3000'));
+    api.listen(3000, () => console.log('API is listening on port 3000'));
 
 });
