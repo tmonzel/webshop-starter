@@ -9,19 +9,19 @@
 </template>
 
 <script lang="ts">
-import { useOrders } from '@shop/features/order';
+import { useOrders } from '@/composables';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'OrdersView',
 
   setup() {
-    const orders = useOrders();
+    const { state, loadAll } = useOrders();
 
-    orders.loadAll();
+    loadAll();
 
     return {
-      state: orders.state,
+      state
     }
   }
 });

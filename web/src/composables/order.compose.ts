@@ -6,11 +6,11 @@ export interface OrderState {
     items: Order[];
 }
 
-const initialState: OrderState = {
+const INIT_STATE: OrderState = {
     items: [],
 }
 
-export const useOrders = () => {
+export const useOrders = (initialState: OrderState = INIT_STATE) => {
     const state = reactive(initialState);
 
     const loadAll = () => {
