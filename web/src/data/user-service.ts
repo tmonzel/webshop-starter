@@ -1,4 +1,4 @@
-import { ResourceService, Product, User } from '@/core';
+import { ResourceService, User } from '@/core';
 
 export const userService = new class extends ResourceService<User> {
     constructor() {
