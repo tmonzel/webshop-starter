@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 
 establishConnection(() => {
     const user = new UserModel({
-        email: 'admin@root.de',
         username: 'admin',
         password: bcrypt.hashSync('root', 8),
         roles: [UserRoles.ADMIN]
