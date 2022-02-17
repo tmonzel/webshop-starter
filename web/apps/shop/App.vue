@@ -22,7 +22,5 @@ export default defineComponent({
 </script>
 
 <style>
-body {
-  background-color: rgb(243, 243, 243);
-}
+
 </style>
