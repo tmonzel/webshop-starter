@@ -1,0 +1,12 @@
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+$modal-fade-transform: scale(.97);
+$modal-transition: transform .2s ease-out;
+$font-family-sans-serif: "Roboto", sans-serif;
+$primary: rgb(80, 18, 250);
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
