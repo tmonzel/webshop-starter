@@ -9,7 +9,19 @@
       </div>
       <hr class="my-5">
 
-      <ProductList v-if="filteredItems.length > 0" :products="filteredItems" />
+      <div v-if="filteredItems.length > 0" class="row">
+        <div class="col-md-3" v-for="product in filteredItems" :key="product._id">
+            <div class="card shadow-sm" @click="navigateToProduct(product)">
+              <div class="card-body">
+                <h6 class="text-muted text-uppercase m-0">{{ product.type }}</h6>
+                <h3 class="cart-title">{{ product.name }}</h3>
+                <div>
+                  <img :src="product.imageUrl" class="w-100">
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
 
       <div class="alert alert-info" v-else>
         Keine Artikel zu „{{ state.searchText }}“ gefunden
@@ -19,24 +31,37 @@
 
 <script lang="ts">
 import { useProducts } from '@/composables';
+import { Product } from '@/core';
+import { router } from '@shop/routing';
 import { defineComponent } from 'vue';
-import { ProductList } from '../components';
 
 export default defineComponent({
   name: 'ProductListView',
-  components: {
-    ProductList
-  },
 
   setup() {
     const products = useProducts();
 
     products.loadAll();
 
+    const navigateToProduct = (product: Product) => {
+      router.push('/products/' + product._id);
+    };
+
     return {
       state: products.state,
-      filteredItems: products.filteredItems
+      filteredItems: products.filteredItems,
+      navigateToProduct
     }
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.card {
+  cursor: pointer;
+
+  &-body {
+    min-height: 200px;
+  }
+}
+</style>

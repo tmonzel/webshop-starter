@@ -4,7 +4,7 @@ import 'bootstrap';
 import './main.scss';
 import './effects';
 import './auth';
-import { router } from './routings';
+import { router } from './routing';
 
 const app = createApp(App);
 app.use(router);

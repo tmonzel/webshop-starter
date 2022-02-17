@@ -1,6 +1,6 @@
 import { AuthActions } from '@/auth';
 import { CartActions } from './features/cart';
-import { router } from './routings';
+import { router } from './routing';
 import { store } from '@/state';
 
 store.actions$.subscribe(action => {
