@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import { http } from './http';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = process.env.VUE_APP_API_URL;
 
 const get = (path: string, config?: AxiosRequestConfig) => {
     return http.get(API_URL + path, config);
