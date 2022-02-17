@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container py-5">
     <div style="max-width: 320px">
       <h1 class="fw-bold mb-5">Anmelden</h1>
       <form 

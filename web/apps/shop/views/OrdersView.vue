@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container py-5">
     <h1>Bestellungen</h1>
     <p class="lead">Alle Ihre Bestellungen auf einen Blick</p>
     <ul class="list-group">

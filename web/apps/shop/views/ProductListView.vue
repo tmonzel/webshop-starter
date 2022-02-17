@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-5">
+    <div class="container py-5">
 
       <h1 class="fw-bold" v-if="state.searchText !== ''">Suche nach <mark>„{{ state.searchText }}“</mark></h1>
       <h1 class="display-4 fw-bold" style="line-height: 1;" v-else>Das<br>Sortiment</h1>

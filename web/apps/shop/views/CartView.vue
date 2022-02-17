@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="container py-5">
     <h1 class="fw-bold mb-5" style="line-height: 1;">Dein<br>Einkaufswagen</h1>
     <div class="row">
       <div class="col-md-9">

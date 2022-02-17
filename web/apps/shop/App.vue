@@ -1,24 +1,28 @@
 <template>
   <Navbar />
-  <main>
+  <main class="bg-white">
     <router-view></router-view>
   </main>
+  <Footer />
   <DialogContainer />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Navbar, DialogContainer } from './components';
+import { Navbar, DialogContainer, Footer } from './components';
 
 export default defineComponent({
   name: 'ShopApp',
   components: {
     Navbar,
-    DialogContainer
+    DialogContainer,
+    Footer
   }
 });
 </script>
 
 <style>
-
+body {
+  background-color: rgb(243, 243, 243);
+}
 </style>
