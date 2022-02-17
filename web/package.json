@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "cross-env APP_NAME=shop vue-cli-service serve",
     "admin:serve": "cross-env APP_NAME=admin vue-cli-service serve --port 1337",
-    "build": "vue-cli-service build",
+    "build": "cross-env APP_NAME=shop vue-cli-service build",
+    "admin:build": "cross-env APP_NAME=admin vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
