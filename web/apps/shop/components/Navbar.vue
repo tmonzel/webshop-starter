@@ -20,10 +20,10 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/products">Artikel</RouterLink>
+            <RouterLink class="nav-link" to="/products">Sortiment</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link" to="/cart">Warenkorb <span class="badge bg-primary">{{ cart.items.length }}</span></RouterLink>
+            <RouterLink class="nav-link" to="/cart">Einkaufswagen <span class="badge bg-primary">{{ cart.items.length }}</span></RouterLink>
           </li>
         </ul>
 
@@ -73,6 +73,10 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+@import "@shop/boot";
+.nav-link.active,
+.navbar-brand.active {
+  color: $primary !important;
+}
 </style>

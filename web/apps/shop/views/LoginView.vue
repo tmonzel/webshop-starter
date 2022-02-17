@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <div style="max-width: 320px">
-      <h1 class="mb-5">Anmelden</h1>
+      <h1 class="fw-bold mb-5">Anmelden</h1>
       <form 
         ref="form"
         @submit.prevent="submit" 

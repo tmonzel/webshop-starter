@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <h1>{{ item.product?.name }}</h1>
+        <h1 class="fw-bold">{{ item.product?.name }}</h1>
         <p class="lead">{{ item.product.type }}</p>
         <p v-html="item.product?.description"></p>
         <div class="d-flex">
@@ -26,7 +26,9 @@
           </div>
         </div>
         <div>
-          <button class="btn btn-lg btn-primary" @click="addItem(item)" :disabled="item.quantity < 1">In den Warenkorb</button>
+          <button class="btn btn-lg btn-primary" @click="addItem(item)" :disabled="item.quantity < 1">
+            <i class="bi bi-cart-plus me-1"></i> In den Wagen
+          </button>
         </div>
       </div>
     </div>

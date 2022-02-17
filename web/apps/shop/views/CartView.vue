@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <h1 class="mb-5">Ihr Warenkorb</h1>
+    <h1 class="fw-bold mb-5" style="line-height: 1;">Dein<br>Einkaufswagen</h1>
     <div class="row">
       <div class="col-md-9">
         <div v-if="cart.items.length > 0">

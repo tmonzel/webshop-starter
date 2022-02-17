@@ -1,7 +1,7 @@
 <template>
   <div class="container mt-5">
     <div style="max-width: 640px;">
-      <h1>Werden Sie Kunde!</h1>
+      <h1 class="fw-bold">Support the Laden!</h1>
       <p class="lead mb-5">Profitieren sie aus unserem reichhaltigen Angebot an Krims und Krams</p>
       <form 
         ref="form"
