@@ -50,8 +50,21 @@ export const router = createRouter({
 
                 {
                     path: '/customers',
-                    name: 'Customers',
-                    component: () => import('./views/CustomersView.vue'),
+                    name: 'CustomerLayout',
+                    component: () => import('./views/customers/CustomerLayout.vue'),
+                    children: [
+                        {
+                            path: '',
+                            name: 'CustomerList',
+                            component: () => import('./views/customers/CustomerListView.vue'),
+                        },
+        
+                        {
+                            path: ':id',
+                            name: 'CustomerDetail',
+                            component: () => import('./views/customers/CustomerDetailView.vue'),
+                        },
+                    ],
                 },
 
                 {

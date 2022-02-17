@@ -13,13 +13,17 @@
           <router-link class="nav-link" to="/products">Produkte</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/customers">Kunden</router-link>
+          <router-link 
+            class="nav-link" 
+            to="/customers" 
+            :class="{ active: currentRoute.fullPath.startsWith('/customers') }"
+          >Kunden</router-link>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <router-link class="nav-link" to="/users">Benutzer</router-link>
-        </li>
+        </li>-->
       </ul>
-
+  {{  }}
     </div>
     <div class="col p-5">
       <router-view></router-view>
@@ -28,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import { router } from '@admin/routing';
 import { defineComponent } from 'vue';
 import { auth } from '../auth';
 
@@ -36,7 +41,8 @@ export default defineComponent({
 
   setup() {
     return {
-      auth
+      auth,
+      currentRoute: router.currentRoute
     }
   }
 });
