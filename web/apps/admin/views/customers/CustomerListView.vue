@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Kunden</h1>
+    <h1 class="fw-bold mb-4">Kunden</h1>
     <table class="table table-hover">
       <thead>
           <tr>

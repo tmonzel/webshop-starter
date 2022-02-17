@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="mb-4">Produkte</h1>
+    <h1 class="fw-bold mb-4">Produkte</h1>
     <table class="table">
       <thead>
           <tr>

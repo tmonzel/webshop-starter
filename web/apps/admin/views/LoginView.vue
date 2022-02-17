@@ -7,8 +7,13 @@
       style="width: 280px;" 
       novalidate
     >
-      <h1 class="mb-4">Shop Admin</h1>
+      <!--<h5><span class="badge bg-dark">Verwaltung</span></h5>-->
+      <h1 class="display-2 mb-4 fw-bold" style="line-height: 1;">
+        Das<br>Lager
+      </h1>
       
+      <hr class="my-5">
+
       <div class="mb-3">
         <FormControl 
           placeholder="Benutzer" 
