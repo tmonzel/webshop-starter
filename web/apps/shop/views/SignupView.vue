@@ -2,14 +2,14 @@
   <div class="container py-5">
     <div style="max-width: 640px;">
       <h1 class="fw-bold">Support the Laden!</h1>
-      <p class="lead mb-5">Profitieren sie aus unserem reichhaltigen Angebot an Krims und Krams</p>
+      <p class="lead mb-5">Werden Sie ein Teil der nicht endenden Erfolgsgeschichte und<br>schöpfen sie aus dem reichhaltigen Angebot an Krims und Krams.<br></p>
       <form 
         ref="form"
         @submit.prevent="submit" 
         :class="{ 'was-validated': state.wasValidated && !state.errors?.email }" 
         novalidate
       >
-        <div class="rounded bg-light p-3 mb-3">
+        <div class="rounded mb-3">
           <div class="row">
             <div class="col-12 mb-3">
               <label for="usernameControl" class="form-label">Benutzername</label>
@@ -64,8 +64,7 @@
             </div>
           </div>
         </div>
-        <div class="rounded bg-light p-3 mb-3">
-          <h5>Persönliche Daten</h5>
+        <div class="rounded mb-3">
           <div class="row">
             <div class="col">
               <div class="mb-3">
