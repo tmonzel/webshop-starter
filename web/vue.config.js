@@ -2,6 +2,7 @@ const path = require('path');
 
 const multiConfig = {
   shop: {
+    outputDir: 'dist/shop',
     pages: {
       index: {
         entry: './apps/shop/main.ts',
@@ -23,6 +24,7 @@ const multiConfig = {
   },
 
   admin: {
+    outputDir: 'dist/admin',
     pages: {
       index: {
         entry: './apps/admin/main.ts',
