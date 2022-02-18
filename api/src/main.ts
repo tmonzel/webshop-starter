@@ -1,7 +1,7 @@
+import './environment';
 import express from 'express';
 import cors from 'cors';
 import { createResourceFromController } from './resource-creator';
-import dotenv from 'dotenv';
 import { orderController } from './controllers/order.controller';
 import { authController } from './controllers/auth.controller';
 import { cartController } from './controllers/cart.controller';
@@ -10,7 +10,7 @@ import { establishConnection } from './database';
 import { userController } from './controllers/user.controller';
 import { customerController } from './controllers/customer.controller';
 
-dotenv.config({ path: '.env.local' });
+
 
 establishConnection(() => {
 

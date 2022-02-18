@@ -1,3 +1,4 @@
+import './environment';
 import { establishConnection } from './database';
 import { Product, ProductModel } from './models/product.model';
 
