@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const establishConnection = (onConnected: Function) => {
-    mongoose.connect('mongodb://root:admin@0.0.0.0:27017/admin').then(() => {
+    mongoose.connect(process.env.DATABASE_URL ?? '').then(() => {
         onConnected();
     }).catch(error => console.error(error));
 }
