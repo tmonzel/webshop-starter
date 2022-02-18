@@ -1,11 +1,11 @@
 <template>
     <div class="container py-5">
 
-      <h1 class="fw-bold" v-if="state.searchText !== ''">Suche nach <mark>„{{ state.searchText }}“</mark></h1>
+      <h1 class="fw-bold" v-if="searchText !== ''">Suche nach <mark>„{{ searchText }}“</mark></h1>
       <h1 class="display-4 fw-bold" style="line-height: 1;" v-else>Das<br>Sortiment</h1>
 
       <div class="d-flex justify-content-end mb-1">
-        <input type="text" v-model="state.searchText" class="form-control form-control-lg" style="max-width: 320px;" placeholder="Suche&hellip;" />
+        <input type="text" v-model="searchText" class="form-control form-control-lg" style="max-width: 320px;" placeholder="Suche&hellip;" />
       </div>
       <hr class="my-5">
 
@@ -24,32 +24,32 @@
       </div>
 
       <div class="alert alert-info" v-else>
-        Keine Artikel zu „{{ state.searchText }}“ gefunden
+        Keine Artikel zu „{{ searchText }}“ gefunden
       </div>
     </div>
 </template>
 
 <script lang="ts">
-import { useProducts } from '@/composables';
 import { Product } from '@/core';
 import { router } from '@shop/routing';
 import { defineComponent } from 'vue';
+import { useProducts } from '@/composables/product';
 
 export default defineComponent({
   name: 'ProductListView',
 
   setup() {
-    const products = useProducts();
+    const { searchText, loadAllIfNecessary, filteredItems } = useProducts();
 
-    products.loadAll();
+    loadAllIfNecessary();
 
     const navigateToProduct = (product: Product) => {
       router.push('/products/' + product._id);
     };
 
     return {
-      state: products.state,
-      filteredItems: products.filteredItems,
+      searchText,
+      filteredItems,
       navigateToProduct
     }
   }

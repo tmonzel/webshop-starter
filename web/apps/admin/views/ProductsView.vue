@@ -25,16 +25,16 @@
 </template>
 
 <script lang="ts">
-import { useProducts } from '@/composables';
+import { useProducts } from '@/composables/product';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'ProductsView',
 
   setup() {
-    const { state, loadAll } = useProducts();
+    const { state, loadAllIfNecessary } = useProducts();
     
-    loadAll();
+    loadAllIfNecessary();
 
     return {
       state

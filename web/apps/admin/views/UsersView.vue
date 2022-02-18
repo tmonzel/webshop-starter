@@ -21,16 +21,16 @@
 </template>
 
 <script lang="ts">
-import { useUsers } from '@/composables';
+import { useUsers } from '@/composables/user';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'UsersView',
 
   setup() {
-    const { state, loadAll } = useUsers();
+    const { state, loadAllIfNecessary } = useUsers();
 
-    loadAll();
+    loadAllIfNecessary();
 
     return {
       state

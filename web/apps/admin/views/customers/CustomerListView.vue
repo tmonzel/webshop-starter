@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { useCustomers } from '@/composables';
+import { useCustomers } from '@/composables/customer';
 import { Customer } from '@/core';
 import { router } from '@admin/routing';
 import { defineComponent } from 'vue';
@@ -28,12 +28,12 @@ export default defineComponent({
   name: 'CustomerListView',
 
   setup() {
-    const { state, loadAll } = useCustomers();
+    const { state, loadAllIfNecessary } = useCustomers();
     const navigateToCustomer = (customer: Customer) => {
       router.push('/customers/' + customer._id);
     }
 
-    loadAll();
+    loadAllIfNecessary();
 
     return {
       state,

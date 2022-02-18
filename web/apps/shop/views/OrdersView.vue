@@ -9,16 +9,16 @@
 </template>
 
 <script lang="ts">
-import { useOrders } from '@/composables';
+import { useOrders } from '@/composables/order';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'OrdersView',
 
   setup() {
-    const { state, loadAll } = useOrders();
+    const { state, loadAllIfNecessary } = useOrders();
 
-    loadAll();
+    loadAllIfNecessary();
 
     return {
       state

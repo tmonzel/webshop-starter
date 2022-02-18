@@ -1,24 +1,32 @@
 <template>
   <div>
-    <h1>Dieser Kunde</h1>
+    <h1>{{ state.loadedItem?.lastName }}, {{ state.loadedItem?.firstName }}</h1>
     
   </div>
 </template>
 
 <script lang="ts">
-import { useCustomers } from '@/composables';
+import { useCustomers } from '@/composables/customer';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'CustomerDetailView',
 
-  setup() {
-    const { state, loadAll } = useCustomers();
+  mounted() {
+    this.loadOneIfNecessary(this.$route.params.id as string);
+  },
 
-    loadAll();
+  unmounted() {
+    this.unloadItem();
+  },
+
+  setup() {
+    const { state, loadOneIfNecessary, unloadItem } = useCustomers();
 
     return {
-      state
+      state,
+      loadOneIfNecessary,
+      unloadItem
     }
   }
 });
