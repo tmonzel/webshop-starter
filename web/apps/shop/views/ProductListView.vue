@@ -1,12 +1,16 @@
 <template>
-    <div class="container py-5">
+    <section class="container py-5">
+      <header class="d-flex justify-content-between">
+        <div>
+          <h1 class="fw-bold" v-if="searchText !== ''">Suche nach <mark>„{{ searchText }}“</mark></h1>
+          <h1 class="display-4 fw-bold" style="line-height: 1;" v-else>Das<br>Sortiment</h1>
+        </div>
 
-      <h1 class="fw-bold" v-if="searchText !== ''">Suche nach <mark>„{{ searchText }}“</mark></h1>
-      <h1 class="display-4 fw-bold" style="line-height: 1;" v-else>Das<br>Sortiment</h1>
+        <div>
+          <input type="text" v-model="searchText" class="form-control form-control-lg" style="max-width: 320px;" placeholder="Suche&hellip;" />
+        </div>
+      </header>
 
-      <div class="d-flex justify-content-end mb-1">
-        <input type="text" v-model="searchText" class="form-control form-control-lg" style="max-width: 320px;" placeholder="Suche&hellip;" />
-      </div>
       <hr class="my-5">
 
       <div v-if="filteredItems.length > 0" class="row">
@@ -26,7 +30,7 @@
       <div class="alert alert-info" v-else>
         Keine Artikel zu „{{ searchText }}“ gefunden
       </div>
-    </div>
+    </section>
 </template>
 
 <script lang="ts">
