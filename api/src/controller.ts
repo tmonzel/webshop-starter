@@ -10,4 +10,5 @@ export interface ResourceController extends Controller {
     index: (request: Request, response: Response) => any;
     pick?: (request: Request, response: Response) => any;
     create?: (request: Request, response: Response) => any;
+    update?: (request: Request, response: Response) => any;
 }

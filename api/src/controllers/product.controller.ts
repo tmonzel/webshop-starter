@@ -16,5 +16,11 @@ export const productController: ResourceController = {
         ProductModel.findOne({ _id: new ObjectId(request.params.id) }).then(result => {
             response.json(result);
         });
-    }
+    },
+
+    update(request: Request, response: Response) {
+        ProductModel.updateOne({ _id: new ObjectId(request.params.id) }, { $set: { ...request.body } }).then(result => {
+            response.sendStatus(200);
+        });
+    },
 }

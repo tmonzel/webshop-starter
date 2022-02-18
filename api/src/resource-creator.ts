@@ -11,4 +11,8 @@ export const createResourceFromController = (api: Express, controller: ResourceC
     if(controller.create) {
         api.post("/" + controller.resourceName, controller.uses ? controller.uses : [], controller.create);
     }
+
+    if(controller.update) {
+        api.patch("/" + controller.resourceName + '/:id', controller.uses ? controller.uses : [], controller.update);
+    }
 }
