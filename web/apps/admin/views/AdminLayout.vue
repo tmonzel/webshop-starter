@@ -10,7 +10,11 @@
           <router-link class="nav-link" to="/">Übersicht</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/products">Produkte</router-link>
+          <router-link 
+            class="nav-link" 
+            to="/products"
+            :class="{ active: currentRoute.fullPath.startsWith('/products') }"
+          >Produkte</router-link>
         </li>
         <li class="nav-item">
           <router-link 

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { auth } from './auth';
+import { customerRoutes } from './views/customers';
+import { productRoutes } from './views/products';
 
 const authGuard = () => {
     // Redirect to login page if user not allowed
@@ -42,30 +44,8 @@ export const router = createRouter({
                     component: () => import('./views/DashboardView.vue'),
                 },
 
-                {
-                    path: '/products',
-                    name: 'Products',
-                    component: () => import('./views/ProductsView.vue'),
-                },
-
-                {
-                    path: '/customers',
-                    name: 'CustomerLayout',
-                    component: () => import('./views/customers/CustomerLayout.vue'),
-                    children: [
-                        {
-                            path: '',
-                            name: 'CustomerList',
-                            component: () => import('./views/customers/CustomerListView.vue'),
-                        },
-        
-                        {
-                            path: ':id',
-                            name: 'CustomerDetail',
-                            component: () => import('./views/customers/CustomerDetailView.vue'),
-                        },
-                    ],
-                },
+                productRoutes,
+                customerRoutes,
 
                 {
                     path: '/users',

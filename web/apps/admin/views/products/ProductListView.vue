@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="fw-bold mb-4">Produkte</h1>
-    <table class="table">
+    <table class="table table-hover">
       <thead>
           <tr>
             <th scope="col">#</th>
@@ -12,12 +12,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="p in state.items" :key="p._id">
-            <th scope="row">{{ p._id }}</th>
-            <td>{{ p.name }}</td>
-            <td>{{ p.type }}</td>
-            <td>{{ p.imageUrl }}</td>
-            <td>{{ p.price.value }} {{ p.price.currency }}</td>
+          <tr v-for="product in state.items" :key="product._id" @click="navigateToProduct(product)">
+            <th scope="row">{{ product._id }}</th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.type }}</td>
+            <td>{{ product.imageUrl }}</td>
+            <td>{{ product.price.value }} {{ product.price.currency }}</td>
           </tr>
         </tbody>
     </table>
@@ -26,6 +26,8 @@
 
 <script lang="ts">
 import { useProducts } from '@/composables/product';
+import { Product } from '@/core';
+import { router } from '@admin/routing';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -36,13 +38,20 @@ export default defineComponent({
     
     loadAllIfNecessary();
 
+    const navigateToProduct = (product: Product) => {
+      router.push('/products/' + product._id + '/edit');
+    }
+
     return {
-      state
+      state,
+      navigateToProduct
     }
   }
 });
 </script>
 
-<style lang="scss">
-
+<style lang="scss" scoped>
+tr {
+  cursor: pointer;
+}
 </style>
