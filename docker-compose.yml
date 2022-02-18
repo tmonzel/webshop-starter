@@ -1,11 +1,17 @@
 version: '3.8'
 
 services:
-  #api:
-  #  build: /api
-  #  container_name: api
-  #  ports:
-  #    - 3000:3000
+  api:
+    build: /api
+    container_name: api
+    ports:
+      - 3000:3000
+
+  web:
+    build: /web
+    container_name: web
+    ports:
+      - 80:80
 
   db:
     image: mongo
