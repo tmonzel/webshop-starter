@@ -27,6 +27,7 @@ export interface ModelState<T> {
     entities: { [id: string]: T };
     loadedItem: T | null;
     allLoaded: boolean;
+    loadingState: string | null;
 }
 
 export interface ReactiveModel<T> {
@@ -36,6 +37,7 @@ export interface ReactiveModel<T> {
     loadOne: (id: string) => void;
     loadOneIfNecessary: (id: string) => void;
     unloadItem: () => void;
+    saveItem: (data: Partial<T>) => void;
 }
 
 export const createReactiveModel = <T extends AbstractDocument>(model: ResourceService<T>, initialState?: ModelState<T>): ReactiveModel<T> => {
@@ -43,7 +45,8 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
         items: [],
         entities: {},
         loadedItem: null,
-        allLoaded: false
+        allLoaded: false,
+        loadingState: null
     }) as ModelState<T>;
 
     const loadAll = () => {
@@ -81,6 +84,20 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
         }
     }
 
+    const saveItem = (data: Partial<T>) => {
+        state.loadingState = 'saving';
+
+        model.save(data).subscribe({
+            next() {
+                state.loadingState = null; 
+            },
+
+            error() {
+                state.loadingState = null; 
+            }
+        });
+    }
+
     const unloadItem = () => {
         state.loadedItem = null;
     }
@@ -91,6 +108,7 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
         loadAllIfNecessary,
         loadOne,
         loadOneIfNecessary,
-        unloadItem
+        unloadItem,
+        saveItem
     } as ReactiveModel<T>;
 }
