@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from 'vue';
+import { defineComponent, PropType, reactive, ref } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 
 export default defineComponent({
@@ -49,7 +49,7 @@ export default defineComponent({
 
     size: String,
     placeholder: String,
-    modelValue: String
+    modelValue: {} as PropType<string | number>
   },
 
   emits: ['update:modelValue'],
@@ -79,7 +79,7 @@ export default defineComponent({
             required: false
         }
     });
-
+    
     const updateValidity = () => {
         const validity = control.value?.validity;
         
