@@ -11,7 +11,12 @@ const post = (path: string, data: any, config?: AxiosRequestConfig) => {
     return http.post(API_URL + path, data, config);
 }
 
+const patch = (path: string, data: any, config?: AxiosRequestConfig) => {
+    return http.patch(API_URL + path, data, config);
+}
+
 export const api = {
     get,
-    post
+    post,
+    patch
 }

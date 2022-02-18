@@ -17,4 +17,10 @@ export class ResourceService<T> {
             map(data => data as T)
         );
     }
+
+    save(data: any): Observable<T> {
+        return api.patch(this.resourceUrl + "/" + data._id, data).pipe(
+            map(data => data as T)
+        );
+    }
 }

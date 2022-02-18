@@ -30,6 +30,17 @@ const post = (path: string, data: any, config?: AxiosRequestConfig): Observable<
     });
 }
 
+const patch = (path: string, data: any, config?: AxiosRequestConfig): Observable<any> => {
+    return new Observable(observer => {
+        httpService.patch(path, data, config).then(response => {
+            observer.next(response.data);
+            observer.complete();
+        }).catch(error => {
+            observer.error(error);
+        });
+    });
+}
+
 const interceptResponse = (onFulfilled?: ((value: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) | undefined) => {
     httpService.interceptors.response.use(onFulfilled);
 }
@@ -41,6 +52,7 @@ const interceptRequest = (onFulfilled?: ((value: AxiosRequestConfig<any>) => Axi
 export const http = {
     get,
     post,
+    patch,
     interceptResponse,
     interceptRequest
 }
