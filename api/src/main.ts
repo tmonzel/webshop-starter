@@ -10,8 +10,6 @@ import { establishConnection } from './database';
 import { userController } from './controllers/user.controller';
 import { customerController } from './controllers/customer.controller';
 
-
-
 establishConnection(() => {
 
     // Initialize application
