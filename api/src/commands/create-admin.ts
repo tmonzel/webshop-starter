@@ -1,3 +1,4 @@
+import '../environment';
 import { establishConnection } from '../database';
 import { UserModel, UserRoles } from '../models/user.model';
 import bcrypt from 'bcrypt';
