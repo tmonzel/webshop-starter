@@ -23,4 +23,10 @@ export const productController: ResourceController = {
             response.sendStatus(200);
         });
     },
+
+    create(request: Request, response: Response) {
+        ProductModel.create(request.body).then(product => {
+            response.status(200).send(product);
+        });
+    },
 }
