@@ -10,8 +10,14 @@ export const createAuth = (config: AuthConfig) => {
     const authToken = localStorage.getItem(config.tokenKey);
 
     const state = reactive<AuthState>({
-        user: authToken ? jwt_decode(authToken) as User : null
+        user: null
     });
+
+    const initialize = () => {
+        if(authToken && !state.user) {
+            loadUser();
+        }
+    }
 
     const logout = () => {
         state.user = null;
@@ -21,18 +27,25 @@ export const createAuth = (config: AuthConfig) => {
 
     const login = (username: string, password: string): Observable<User> => {
         return api.post('/auth/login', { username, password }).pipe(map(response => {
-            const user = jwt_decode(response.accessToken) as User;
+            const payload = jwt_decode(response.accessToken) as { userRoles: string[] };
 
-            if(!rolesAllowed(user.roles)) {
+            if(!rolesAllowed(payload.userRoles)) {
                 throw new Error("User is not allowed");
             } else {
-                state.user = user;
                 localStorage.setItem(config.tokenKey, response.accessToken);
+
+                loadUser();
                 store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
             }
 
             return state.user as User;
         }))
+    }
+
+    const loadUser = () => {
+        api.get('/auth/user').subscribe(user => {
+            state.user = user;
+        })
     }
 
     const rolesAllowed = (roles: string[]): boolean => {
@@ -71,5 +84,7 @@ export const createAuth = (config: AuthConfig) => {
         state,
         isLoggedIn,
         isAllowed,
+        loadUser,
+        initialize
     }
 }
