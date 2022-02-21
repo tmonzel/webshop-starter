@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "commonjs",
+    "module": "CommonJS",
     "rootDir": ".",
     "outDir": "dist",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "strict": true,
     "noImplicitAny": false,
@@ -15,11 +15,9 @@
   },
 
   "include": [
-    "**/*.ts", 
+    "./src/**/*.ts", 
     "./tests/**/*.ts",
   ],
   
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["**/*.(spec|test).ts", "node_modules"],
 }
