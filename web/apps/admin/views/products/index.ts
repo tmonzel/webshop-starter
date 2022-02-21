@@ -14,6 +14,12 @@ export const productRoutes = {
             name: 'ProductDetail',
             component: () => import('./ProductDetailView.vue'),
         },
+
+        {
+            path: 'new',
+            name: 'ProductCreate',
+            component: () => import('./ProductCreateView.vue'),
+        },
         
         {
             path: '',
