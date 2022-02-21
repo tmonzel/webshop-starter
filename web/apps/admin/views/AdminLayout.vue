@@ -53,5 +53,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import "@admin/boot";
 
+.nav-link {
+  color: $dark;
+  
+  &.active {
+    background-color: $dark !important;
+  }
+}
 </style>
