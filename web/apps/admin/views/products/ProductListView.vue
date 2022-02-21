@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="mb-4">
+      <RouterLink class="btn btn-lg btn-primary" to="/products/new">Neu anlegen <i class="bi bi-plus-square ms-1"></i></RouterLink>
+    </div>
     <h1 class="fw-bold mb-4">Produkte</h1>
     <table class="table table-hover">
       <thead>
