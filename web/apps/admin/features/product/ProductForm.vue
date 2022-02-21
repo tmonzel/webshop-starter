@@ -53,15 +53,19 @@ export default defineComponent({
     product: {} as PropType<Product>
   },
 
-  methods: {
-    submit() {
-        if (!this.form?.checkValidity()) {
-            // Show errors
-            this.state.wasValidated = true;
-            return;
-        }
+  emits: ['save'],
 
-        this.saveItem(this.state.data as Partial<Product>);
+  methods: {
+    async submit() {
+      if (!this.form?.checkValidity()) {
+          // Show errors
+          this.state.wasValidated = true;
+          return;
+      }
+
+      const product = await this.saveItem({ ...this.state.data } as Partial<Product>);
+
+      this.$emit('save', product);
     }
   },
 
