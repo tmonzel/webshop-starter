@@ -4,3 +4,5 @@ export const auth = createAuth({
     tokenKey: '_ADMIN_AUTH',
     allowedRoles: ['ROLE_ADMIN']
 });
+
+auth.initialize();
