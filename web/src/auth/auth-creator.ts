@@ -7,14 +7,12 @@ import { AuthConfig } from './auth.config';
 import { reactive } from 'vue';
 
 export const createAuth = (config: AuthConfig) => {
-    const authToken = localStorage.getItem(config.tokenKey);
-
     const state = reactive<AuthState>({
         user: null
     });
 
     const initialize = () => {
-        if(authToken && !state.user) {
+        if(gotValidToken() && !state.user) {
             loadUser();
         }
     }
@@ -32,8 +30,7 @@ export const createAuth = (config: AuthConfig) => {
             if(!rolesAllowed(payload.userRoles)) {
                 throw new Error("User is not allowed");
             } else {
-                localStorage.setItem(config.tokenKey, response.accessToken);
-
+                writeToken(response.accessToken);
                 loadUser();
                 store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
             }
@@ -42,10 +39,22 @@ export const createAuth = (config: AuthConfig) => {
         }))
     }
 
+    const readToken = () => {
+        return localStorage.getItem(config.tokenKey);
+    }
+
+    const writeToken = (token: string) => {
+        localStorage.setItem(config.tokenKey, token);
+    }
+
     const loadUser = () => {
         api.get('/auth/user').subscribe(user => {
             state.user = user;
         })
+    }
+
+    const gotValidToken = (): boolean => {
+        return readToken() != null;
     }
 
     const rolesAllowed = (roles: string[]): boolean => {
@@ -53,15 +62,22 @@ export const createAuth = (config: AuthConfig) => {
     }
 
     const isLoggedIn = (): boolean => {
-        return state.user !== null;
+        return gotValidToken();
     }
 
     const isAllowed = (): boolean => {
-        return state.user !== null && rolesAllowed(state.user.roles);
+        const token = readToken();
+
+        if(!token) {
+            return false;
+        }
+
+        const payload = jwt_decode(token) as any;
+        return rolesAllowed(payload.userRoles as string[]);
     }
 
     http.interceptRequest(request => {
-        const token = localStorage.getItem(config.tokenKey);
+        const token = readToken();
     
         if(token && request.headers) {
             request.headers['Authorization'] = 'Bearer ' + token;
