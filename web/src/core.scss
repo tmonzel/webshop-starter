@@ -1,7 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
-
 td, th {
     &.nostretch {
         width: 1%;
     }
+}
+
+h1 {
+    font-weight: 700 !important;
+    line-height: 1 !important;
 }
