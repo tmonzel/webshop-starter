@@ -1,7 +1,10 @@
 <template>
   <Navbar />
   <main class="bg-white">
-    <router-view></router-view>
+    <!-- TODO: Move suspense wrapper to lower/concrete contexts -->
+    <Suspense>
+      <RouterView />
+    </Suspense>
   </main>
   <Footer />
   <DialogContainer />
