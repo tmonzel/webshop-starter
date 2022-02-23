@@ -1,4 +1,4 @@
-import { firstValueFrom, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { reactive } from 'vue';
 import { AbstractDocument, ResourceService } from './core';
 
@@ -49,18 +49,17 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
         loadingState: null
     }) as ModelState<T>;
 
-    const loadAll = () => {
-        model.find().subscribe(items => {
-            state.items = items;
+    const loadAll = async () => {
+        const items = await model.find();
+        state.items = items;
 
-            const entities = {};
-            for(const item of items) {
-                if(item._id) entities[item._id] = item;
-            }
+        const entities = {};
+        for(const item of items) {
+            if(item._id) entities[item._id] = item;
+        }
 
-            state.entities = entities;
-            state.allLoaded = true;
-        });
+        state.entities = entities;
+        state.allLoaded = true;
     }
 
     const loadAllIfNecessary = () => {
@@ -69,11 +68,10 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
         }
     }
 
-    const loadOne = (id: string) => {
-        model.findOne(id).subscribe(item => {
-            state.entities[item._id as string] = item;
-            state.loadedItem = item;
-        });
+    const loadOne = async (id: string) => {
+        const item = await model.findOne(id);
+        state.entities[item._id as string] = item;
+        state.loadedItem = item;
     }
 
     const loadOneIfNecessary = (id: string) => {
@@ -87,7 +85,7 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
     const saveItem = async (data: Partial<T>) => {
         state.loadingState = 'saving';
         
-        const item = await firstValueFrom(model.save(data));
+        const item = await model.save(data);
 
         if(data._id && state.entities[data._id as string]) {
             const obj = state.entities[data._id as string];

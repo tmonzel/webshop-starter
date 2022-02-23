@@ -36,7 +36,7 @@ export const useCart = () => {
         cartState.items.splice(index, 1);
     }
 
-    const orderCart = () => {
+    const orderCart = async () => {
         if(auth.state.user) {
             const items = cartState.items.map(item => {
                 return {
@@ -45,16 +45,10 @@ export const useCart = () => {
                 }
             })
 
-            api.post('/cart', { user: auth.state.user._id, items }).subscribe({
-                next() {
-                    cartState.items = [];
-                    store.dispatch({ type: CartActions.ORDER_SUCCESS });
-                },
+            await api.post('/cart', { user: auth.state.user._id, items });
 
-                error() {
-
-                }
-            });
+            cartState.items = [];
+            store.dispatch({ type: CartActions.ORDER_SUCCESS });
         }
     }
 

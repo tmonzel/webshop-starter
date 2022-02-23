@@ -67,37 +67,34 @@ export default defineComponent({
       }
     });
 
-    const submit = () => {
+    const submit = async () => {
       if (!form.value?.checkValidity()) {
         // Show errors
         state.wasValidated = true;
         return;
       }
 
-      auth.login(state.data.username, state.data.password).subscribe({
-        next: (user) => {
-          // Reset form state
-          state.data.username = '';
-          state.data.password = '';
-        },
-
-        error: (error) => {
-          if(error.response) {
-            if(error.response.data.errors) {
-              state.errors = error.response.data.errors
-            } else {
-              state.errors = {
-                remoteError: error.response.data
-              };
-            }
+      try {
+        auth.login(state.data.username, state.data.password);
+      } catch(error: any) {
+        if(error.response) {
+          if(error.response.data.errors) {
+            state.errors = error.response.data.errors
           } else {
-            // Client error
             state.errors = {
-                error: error.message
+              remoteError: error.response.data
             };
           }
+        } else {
+          // Client error
+          state.errors = {
+              error: error.message
+          };
         }
-      });
+      }
+
+      state.data.username = '';
+      state.data.password = '';
     }
     
     return {

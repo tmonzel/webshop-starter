@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { OrderItem } from '@/core';
-import { productService } from '@/data';
+import { ProductResource } from '@/resources';
 import { useCart } from '@shop/features/cart';
 import { defineComponent, Ref, ref } from 'vue';
 
@@ -45,17 +45,17 @@ export default defineComponent({
   name: 'ProductDetailView',
   props: ['id'],
 
-  setup(props) {
+  async setup(props) {
     const item = ref() as Ref<OrderItem>;
     const { addItem } = useCart();
 
-    productService.findOne(props.id).subscribe(product =>{
-      item.value = {
-        product,
-        quantity: 1,
-        config: {}
-      };
-    });
+    const product = await ProductResource.findOne(props.id);
+
+    item.value = {
+      product,
+      quantity: 1,
+      config: {}
+    };
 
     return {
       item,

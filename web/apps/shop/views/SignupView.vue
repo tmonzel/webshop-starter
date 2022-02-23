@@ -151,6 +151,7 @@ import { validate } from '@/directives';
 import { FormState } from '@/forms';
 import { api } from '@/core';
 import { store } from '@/state';
+import { CustomerResource } from '@/resources';
 
 export default defineComponent({
   name: 'SignupView',
@@ -174,34 +175,32 @@ export default defineComponent({
       },
     });
 
-    const submit = () => {
+    const submit = async () => {
       if (!form.value?.checkValidity()) {
         // Show errors
         state.wasValidated = true;
         return;
       }
 
-      api.post('/customers', state.data).subscribe({ 
-        next() {
-            // Success
-            store.dispatch({ type: 'REGISTER_SUCCESS' });
+      try {
+        await CustomerResource.create(state.data);
+      } catch(error: any) {
+        state.errors = error.response.data.errors;
+      }
 
-            // Reset form
-            state.errors = null;
-            state.data.username = '';
-            state.data.password = '';
-            state.data.firstName = '';
-            state.data.lastName = '';
-            state.data.address = '';
-            state.data.email = '';
-            
-            passwordConfirm.value = '';
-        },
+      // Success
+      store.dispatch({ type: 'REGISTER_SUCCESS' });
 
-        error(error) {
-            state.errors = error.response.data.errors;
-        }
-      });
+      // Reset form
+      state.errors = null;
+      state.data.username = '';
+      state.data.password = '';
+      state.data.firstName = '';
+      state.data.lastName = '';
+      state.data.address = '';
+      state.data.email = '';
+      
+      passwordConfirm.value = '';
     }
 
     return {

@@ -19,24 +19,28 @@ export const createAuth = (config: AuthConfig) => {
 
     const logout = () => {
         state.user = null;
-        localStorage.removeItem(config.tokenKey);
+        removeToken();
         store.dispatch({ type: AuthActions.LOGOUT_SUCCESS });
     }
 
-    const login = (username: string, password: string): Observable<User> => {
-        return api.post('/auth/login', { username, password }).pipe(map(response => {
-            const payload = jwt_decode(response.accessToken) as { userRoles: string[] };
+    const login = async (username: string, password: string): Promise<string | boolean> => {
+        try {
+            const response = await api.post('/auth/login', { username, password });
+            const payload = jwt_decode(response.data.accessToken) as { userRoles: string[] };
 
             if(!rolesAllowed(payload.userRoles)) {
                 throw new Error("User is not allowed");
             } else {
-                writeToken(response.accessToken);
+                writeToken(response.data.accessToken);
                 loadUser();
                 store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
             }
 
-            return state.user as User;
-        }))
+            return response.data.accessToken as string;
+
+        } catch(error) {
+            return false;
+        }
     }
 
     const readToken = () => {
@@ -47,10 +51,14 @@ export const createAuth = (config: AuthConfig) => {
         localStorage.setItem(config.tokenKey, token);
     }
 
-    const loadUser = () => {
-        api.get('/auth/user').subscribe(user => {
-            state.user = user;
-        })
+    const removeToken = () => {
+        localStorage.removeItem(config.tokenKey);
+    }
+
+    const loadUser = async () => {
+        const response = await api.get('/auth/user');
+
+        state.user = response.data;
     }
 
     const gotValidToken = (): boolean => {
@@ -76,7 +84,7 @@ export const createAuth = (config: AuthConfig) => {
         return rolesAllowed(payload.userRoles as string[]);
     }
 
-    http.interceptRequest(request => {
+    http.interceptors.request.use(request => {
         const token = readToken();
     
         if(token && request.headers) {
@@ -86,7 +94,7 @@ export const createAuth = (config: AuthConfig) => {
         return request;
     });
 
-    http.interceptResponse(response => {
+    http.interceptors.response.use(response => {
         if(state.user && !rolesAllowed(state.user.roles)) {
             logout();
         }

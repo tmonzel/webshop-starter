@@ -1,9 +1,9 @@
 import { Product } from '@/core';
-import { productService } from '@/data';
+import { ProductResource } from '@/resources';
 import { createReactiveModel } from '@/state';
 import { computed, ref } from 'vue';
 
-export const ProductModel = createReactiveModel<Product>(productService);
+export const ProductModel = createReactiveModel<Product>(ProductResource);
 
 export const useProducts = () => {
     const modelState = ProductModel.state;
