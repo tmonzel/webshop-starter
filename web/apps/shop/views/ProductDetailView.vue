@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-5" v-if="item">
+  <div class="container py-5">
     <div class="row justify-content-between">
       <div class="col-md-5 bg-light d-flex justify-content-center align-items-center" style="min-height: 500px;">
         <div style="width: 350px; height: 300px">
