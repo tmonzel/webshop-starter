@@ -1,7 +1,7 @@
 import { AbstractDocument } from './schema';
 import { api } from './api';
 
-export class ResourceService<T extends AbstractDocument> {
+export class Resource<T extends AbstractDocument> {
     constructor(
         protected resourceUrl: string
     ) { }
@@ -31,10 +31,6 @@ export class ResourceService<T extends AbstractDocument> {
     }
 }
 
-export const createResource = <T>(resourceUrl: string): ResourceService<T> => {
-    return new class extends ResourceService<T> {
-        constructor() {
-            super(resourceUrl);
-        }
-    }
+export const createResource = <T>(resourceUrl: string): Resource<T> => {
+    return new Resource<T>(resourceUrl);
 }

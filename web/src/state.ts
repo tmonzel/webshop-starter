@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
 import { reactive } from 'vue';
-import { AbstractDocument, ResourceService } from './core';
+import { AbstractDocument, Resource } from './core';
 
 export interface Action {
     type: string;
@@ -40,7 +40,7 @@ export interface ReactiveModel<T> {
     saveItem: (data: Partial<T>) => Promise<T>;
 }
 
-export const createReactiveModel = <T extends AbstractDocument>(model: ResourceService<T>, initialState?: ModelState<T>): ReactiveModel<T> => {
+export const createReactiveModel = <T extends AbstractDocument>(resource: Resource<T>, initialState?: ModelState<T>): ReactiveModel<T> => {
     const state = reactive(initialState ?? {
         items: [],
         entities: {},
@@ -50,7 +50,7 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
     }) as ModelState<T>;
 
     const loadAll = async () => {
-        const items = await model.find();
+        const items = await resource.find();
         state.items = items;
 
         const entities = {};
@@ -69,7 +69,7 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
     }
 
     const loadOne = async (id: string) => {
-        const item = await model.findOne(id);
+        const item = await resource.findOne(id);
         state.entities[item._id as string] = item;
         state.loadedItem = item;
     }
@@ -85,7 +85,7 @@ export const createReactiveModel = <T extends AbstractDocument>(model: ResourceS
     const saveItem = async (data: Partial<T>) => {
         state.loadingState = 'saving';
         
-        const item = await model.save(data);
+        const item = await resource.save(data);
 
         if(data._id && state.entities[data._id as string]) {
             const obj = state.entities[data._id as string];

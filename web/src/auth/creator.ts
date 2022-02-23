@@ -1,10 +1,10 @@
-import { api, http, User } from '@/core';
+import { http } from '@/core';
 import { store } from '@/state';
-import { map, Observable } from 'rxjs';
 import { AuthActions, AuthState } from './auth.state';
 import jwt_decode from 'jwt-decode';
 import { AuthConfig } from './auth.config';
 import { reactive } from 'vue';
+import { AuthResource } from './auth.resource';
 
 export const createAuth = (config: AuthConfig) => {
     const state = reactive<AuthState>({
@@ -12,6 +12,24 @@ export const createAuth = (config: AuthConfig) => {
     });
 
     const initialize = () => {
+        http.interceptors.request.use(request => {
+            const token = readToken();
+        
+            if(token && request.headers) {
+                request.headers['Authorization'] = 'Bearer ' + token;
+            }
+            
+            return request;
+        });
+
+        http.interceptors.response.use(response => {
+            if(state.user && !rolesAllowed(state.user.roles)) {
+                logout();
+            }
+
+            return response;
+        });
+
         if(gotValidToken() && !state.user) {
             loadUser();
         }
@@ -25,18 +43,18 @@ export const createAuth = (config: AuthConfig) => {
 
     const login = async (username: string, password: string): Promise<string | boolean> => {
         try {
-            const response = await api.post('/auth/login', { username, password });
-            const payload = jwt_decode(response.data.accessToken) as { userRoles: string[] };
+            const accessToken = await AuthResource.login(username, password);
+            const payload = jwt_decode(accessToken) as { userRoles: string[] };
 
             if(!rolesAllowed(payload.userRoles)) {
                 throw new Error("User is not allowed");
             } else {
-                writeToken(response.data.accessToken);
+                writeToken(accessToken);
                 loadUser();
                 store.dispatch({ type: AuthActions.LOGIN_SUCCESS });
             }
 
-            return response.data.accessToken as string;
+            return accessToken;
 
         } catch(error) {
             return false;
@@ -56,9 +74,7 @@ export const createAuth = (config: AuthConfig) => {
     }
 
     const loadUser = async () => {
-        const response = await api.get('/auth/user');
-
-        state.user = response.data;
+        state.user = await AuthResource.getCurrentUser();
     }
 
     const gotValidToken = (): boolean => {
@@ -83,24 +99,6 @@ export const createAuth = (config: AuthConfig) => {
         const payload = jwt_decode(token) as any;
         return rolesAllowed(payload.userRoles as string[]);
     }
-
-    http.interceptors.request.use(request => {
-        const token = readToken();
-    
-        if(token && request.headers) {
-            request.headers['Authorization'] = 'Bearer ' + token;
-        }
-        
-        return request;
-    });
-
-    http.interceptors.response.use(response => {
-        if(state.user && !rolesAllowed(state.user.roles)) {
-            logout();
-        }
-
-        return response;
-    });
 
     return {
         logout,
