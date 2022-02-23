@@ -8,6 +8,9 @@ $font-family-sans-serif: "Roboto", sans-serif;
 $primary: rgb(80, 18, 250);
 $body-bg: rgb(241, 241, 241);
 $input-bg: rgb(252, 252, 252);
+$headings-line-height: 1;
+$headings-font-weight: 700;
+$display-font-weight: 700;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";

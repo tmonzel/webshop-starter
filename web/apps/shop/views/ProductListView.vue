@@ -2,10 +2,10 @@
     <section class="container py-5">
       <header class="d-flex justify-content-between">
         <div>
-          <h1 class="fw-bold" style="line-height: 1;" v-if="searchText !== ''">
+          <h1 v-if="searchText !== ''">
             Suche nach <mark>„{{ searchText }}“</mark>
           </h1>
-          <h1 class="fw-bold" style="line-height: 1;" v-else>Das<br>Sortiment</h1>
+          <h1 v-else>Das<br>Sortiment</h1>
         </div>
 
         <div>

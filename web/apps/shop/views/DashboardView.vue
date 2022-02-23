@@ -1,7 +1,7 @@
 <template>
   <section class="container py-5">
     <header>
-      <h1 class="display-2 fw-bold" style="line-height: 1;">Der<br>Laden</h1>
+      <h1 class="display-2">Der<br>Laden</h1>
     </header>
 
     <hr class="my-5">

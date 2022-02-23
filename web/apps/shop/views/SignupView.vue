@@ -1,7 +1,7 @@
 <template>
   <div class="container py-5">
     <div style="max-width: 640px;">
-      <h1 class="fw-bold">Support the Laden!</h1>
+      <h1>Support the Laden!</h1>
       <p class="lead mb-5">Werden Sie ein Teil der nicht endenden Erfolgsgeschichte und<br>schöpfen sie aus dem reichhaltigen Angebot an Krims und Krams.<br></p>
       <form 
         ref="form"

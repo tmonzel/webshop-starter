@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <h1 class="fw-bold">{{ item.product?.name }}</h1>
+        <h1>{{ item.product?.name }}</h1>
         <p class="lead">{{ item.product.type }}</p>
         <p v-html="item.product?.description"></p>
         <div class="d-flex">

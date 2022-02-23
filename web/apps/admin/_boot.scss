@@ -6,6 +6,9 @@ $modal-fade-transform: scale(.97);
 $modal-transition: transform .2s ease-out;
 $font-family-sans-serif: "Roboto", sans-serif;
 $primary: rgb(80, 18, 250);
+$headings-line-height: 1;
+$headings-font-weight: 700;
+$display-font-weight: 700;
 
 // 3. Include remainder of required Bootstrap stylesheets
 @import "bootstrap/scss/variables";
