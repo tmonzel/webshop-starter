@@ -28,6 +28,10 @@ export const createAuth = (config: AuthConfig) => {
             }
 
             return response;
+        }, (error) => {
+            if(error.response.status === 403) {
+                logout();
+            }
         });
 
         if(gotValidToken() && !state.user) {
