@@ -18,14 +18,14 @@ productEndpoint.get('/:id', async (req: Request, res: Response) => {
 
 // Update one by id
 productEndpoint.patch('/:id', async (req: Request, res: Response) => {
-    ProductModel.findByIdAndUpdate(req.params.id, { $set: { ...req.body } });
-    return res.sendStatus(201);
+    await ProductModel.findByIdAndUpdate(req.params.id, { $set: { ...req.body } });
+    return res.sendStatus(204);
 });
 
 // Create new
 productEndpoint.post('/', async (req: Request, res: Response) => {
     const product = await ProductModel.create(req.body);
-    return res.status(200).send(product);
+    return res.status(201).send(product);
 });
 
 // Delete product
