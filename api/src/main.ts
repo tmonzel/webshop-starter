@@ -4,4 +4,5 @@ import api from './api';
 
 establishConnection();
 
-api.listen(3000, () => console.log('API is listening on port 3000'));
+const port = process.env.PORT || 3000
+api.listen(port, () => console.log(`API is listening on port ${port}`));
