@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 
 // Parse content-type application/json 
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
 
 // Bind endpoints
 app.use('/api/v1', apiEndpoints);
