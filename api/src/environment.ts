@@ -1,7 +1,12 @@
 import dotenv from 'dotenv';
 
-if(process.env.APP_ENV === 'production') {
-    dotenv.config({ path: '.env.local' });
-} else {
-    dotenv.config({ path: '.env.dev' });
+switch(process.env.APP_ENV) {
+    case 'production':
+        dotenv.config({ path: '.env.local' });
+        break;
+    case 'test':
+        dotenv.config({ path: '.env.test' });
+        break;
+    default:
+        dotenv.config({ path: '.env.dev' });
 }
