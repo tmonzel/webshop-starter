@@ -1,11 +1,7 @@
-import { createResource, Customer, Media, Order, Product, User } from './core';
+import { createResource, Customer, Order, Product, User } from './core';
 
 export const CustomerResource = createResource<Customer>(
     '/customers'
-);
-
-export const MediaResource = createResource<Media>(
-    '/media'
 );
 
 export const OrderResource = createResource<Order>(
