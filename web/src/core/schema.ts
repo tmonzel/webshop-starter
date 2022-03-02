@@ -14,6 +14,10 @@ export interface User extends AbstractDocument {
     roles: string[];
 }
 
+/**
+ * 
+ * /api/v1/customers
+ */
 export interface Customer extends User {
     email: string;
     firstName: string;
@@ -24,13 +28,13 @@ export interface Customer extends User {
 /**
  * 
  * 
- * @endpoint /api/products
+ * @endpoint /api/v1/products
  */
 export interface Product extends AbstractDocument {
     type: string;
     name: string;
     description: string;
-    imageUrl: string;
+    image: string;
     price: { 
         value: number; 
         currency: 'EUR' | 'USD' 
@@ -39,10 +43,9 @@ export interface Product extends AbstractDocument {
 
 /**
  * 
- * @endpoint /api/orders
+ * @endpoint /api/v1/orders
  */
 export interface Order extends AbstractDocument {
-    state: 'ordered' | 'cart';
     items: OrderItem[];
     user?: User;
 }
