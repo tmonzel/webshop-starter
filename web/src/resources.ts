@@ -16,10 +16,10 @@ export const ProductResource = createResource<Product>(
         },
 
         deserialize(data: any): Product {
-            console.log(data);
-            
-
-            return { ...data, image: Buffer.from(data.image.data, 'binary').toString('utf8') };
+            return { 
+                ...data, 
+                image: data.image ? Buffer.from(data.image.data, 'binary').toString('utf8') : null
+            };
         }
     }
 );
