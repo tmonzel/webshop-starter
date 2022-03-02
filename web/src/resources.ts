@@ -13,7 +13,19 @@ export const OrderResource = createResource<Order>(
 );
 
 export const ProductResource = createResource<Product>(
-    '/products'
+    '/products',
+    {
+        serialize(product: Product): any {
+            return product;
+        },
+
+        deserialize(data: any): Product {
+            console.log(data);
+            
+
+            return { ...data, image: Buffer.from(data.image.data, 'binary').toString('utf8') };
+        }
+    }
 );
 
 export const UserResource = createResource<User>(

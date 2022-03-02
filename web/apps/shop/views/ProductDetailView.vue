@@ -3,7 +3,7 @@
     <div class="row justify-content-between">
       <div class="col-md-5 bg-light d-flex justify-content-center align-items-center" style="min-height: 500px;">
         <div style="width: 350px; height: 300px">
-          <img :src="item.product.imageUrl" class="w-100">
+          <img :src="item.product.image" class="w-100">
         </div>
       </div>
       <div class="col-md-6">

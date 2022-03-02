@@ -19,7 +19,7 @@
             <th scope="row">{{ product._id }}</th>
             <td>{{ product.name }}</td>
             <td>{{ product.type }}</td>
-            <td>{{ product.imageUrl }}</td>
+            <td><img :src="product.image" style="max-width: 140px;"></td>
             <td>{{ product.price.value }} {{ product.price.currency }}</td>
           </tr>
         </tbody>

@@ -30,23 +30,22 @@ export const authRequired = async (req: AuthRequest, res: Response, next: NextFu
       return res.sendStatus(401);
     }
 
-    const payload = verifyToken(token);
+    try {
+      const payload = verifyToken(token);
+      const user = await UserModel.findById(payload.userId);
 
-    if(!payload) {
-      // Token invalid
+      if(!user) {
+        // User not found
+        return res.sendStatus(403);
+      }
+
+      req.user = user;
+      
+      next();
+
+    } catch(error) {
       return res.sendStatus(403);
     }
-
-    const user = await UserModel.findById(payload.userId);
-
-    if(!user) {
-      // User not found
-      return res.sendStatus(403);
-    }
-
-    req.user = user;
-    
-    next();
 };
 
 export const allowAdminOnly = (req: AuthRequest, res: Response, next: NextFunction) => {

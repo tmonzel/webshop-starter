@@ -20,11 +20,11 @@
         <label for="productDescriptionControl" class="form-label">Beschreibung</label>
         <textarea id="productDescriptionControl" class="form-control" v-model="state.data.description" rows="8"></textarea>
       </div>
+
+
       <div class="mb-3">
-        <FormControl 
-          label="Bild" 
-          v-model="state.data.imageUrl" 
-        />
+        <label for="productImageControl" class="form-label">Bild</label>
+        <input id="productImageControl" type="file" class="form-control" @change="onImageChange">
       </div>
 
       <div class="mb-3">
@@ -56,12 +56,27 @@ export default defineComponent({
   emits: ['save'],
 
   methods: {
+    onImageChange(e) {
+      const controlElement = e.target as HTMLInputElement;
+      const files = controlElement.files as FileList;
+
+      if(files.length > 0) {
+        const file = files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.state.data.image = reader.result as string;
+        }
+      }
+    },
+
     async submit() {
       if (!this.form?.checkValidity()) {
           // Show errors
           this.state.wasValidated = true;
           return;
       }
+      
 
       const product = await this.saveItem({ ...this.state.data } as Partial<Product>);
 
@@ -75,7 +90,8 @@ export default defineComponent({
         type: '',
         price: { value: 0, currency: 'EUR' },
         description: '',
-        imageUrl: ''
+        imageUrl: '',
+        image: ''
     } as Product;
       
     const form = ref<InstanceType<typeof HTMLFormElement> | null>(null);

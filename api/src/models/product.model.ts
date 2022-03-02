@@ -4,16 +4,16 @@ export interface Product {
     name: string;
     type: string;
     description: string;
-    imageUrl: string;
     price: { value: number; currency: string };
+    image?: Buffer;
 }
 
 const schema = new Schema<Product>({
     name: { type: String, required: true },
     type: String,
     description: String,
-    imageUrl: String,
-    price: { value: Number, currency: String }
+    price: { value: Number, currency: String },
+    image: Buffer
 })
 
 export const ProductModel = model<Product>('Product', schema);
