@@ -1,7 +1,8 @@
+
+import '@/environment';
 import api from '@/api';
 import { establishConnection } from '@/database';
 import supertest from 'supertest';
-import '@/environment';
 import { ProductModel } from '@/models/product.model';
 import { productFixtures } from './fixtures/product.fixtures';
 
@@ -29,7 +30,6 @@ describe('products endpoint', () => {
     const products = response.body as any[];
 
     expect(products).toHaveLength(2);
-    expect(products[0]).toHaveProperty('name', 'Windows');
   });
 
   it('should create a product', async () => {
