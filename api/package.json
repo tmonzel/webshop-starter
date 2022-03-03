@@ -17,7 +17,7 @@
     "dev": "nodemon -r tsconfig-paths/register src/main.ts",
     "start": "cross-env APP_ENV=production ts-node -r tsconfig-paths/register src/main.ts",
     "db:populate": "ts-node -r tsconfig-paths/register ./db.populate.ts",
-    "test": "jest"
+    "test": "cross-env APP_ENV=test jest"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
